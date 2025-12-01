@@ -19,8 +19,11 @@ if config.config_file_name is not None:
 
 # Set sqlalchemy.url from environment
 database_url = os.getenv("DATABASE_URL", "postgresql://fakecarrier:fakecarrier_pass@localhost:5432/fakecarrier")
-# Convert postgresql:// to postgresql+psycopg:// for psycopg3
-database_url = database_url.replace("postgresql://", "postgresql+psycopg://")
+# Convert postgresql:// or postgres:// to postgresql+psycopg:// for psycopg3
+if database_url.startswith("postgresql://"):
+    database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
+elif database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql+psycopg://", 1)
 config.set_main_option("sqlalchemy.url", database_url)
 
 target_metadata = Base.metadata
