@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FakeCarrier Scanner</title>
+    
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #f9fafb;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 20px;
+            margin: 0 0 16px 0;
+            color: #111827;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        
+        button:hover {
+            background: #1d4ed8;
+        }
+        
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .risk-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .risk-low {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .risk-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .risk-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .score {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        
+        .summary {
+            margin-top: 12px;
+        }
+        
+        .summary-item {
+            font-size: 13px;
+            margin: 6px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        
+        .summary-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+        
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FakeCarrier Scanner</h1>
+        
+        <button id="scanButton" onclick="scanEmail()">Scan This Email</button>
+        
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="loading" class="loading" style="display: none;">Scanning email...</div>
+        <div id="result" style="display: none;"></div>
+    </div>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+        
+        Office.onReady((info) => {
+            if (info.host === Office.HostType.Outlook) {
+                console.log('FakeCarrier add-in loaded');
+            }
+        });
+        
+        async function scanEmail() {
+            const scanButton = document.getElementById('scanButton');
+            const errorDiv = document.getElementById('error');
+            const loadingDiv = document.getElementById('loading');
+            const resultDiv = document.getElementById('result');
+            
+            scanButton.disabled = true;
+            errorDiv.style.display = 'none';
+            loadingDiv.style.display = 'block';
+            resultDiv.style.display = 'none';
+            
+            try {
+                const item = Office.context.mailbox.item;
+                
+                // Get sender
+                const sender = item.from.emailAddress;
+                
+                // Get body
+                item.body.getAsync(Office.CoercionType.Text, async (bodyResult) => {
+                    if (bodyResult.status === Office.AsyncResultStatus.Failed) {
+                        showError('Failed to read email body');
+                        return;
+                    }
+                    
+                    const body = bodyResult.value;
+                    
+                    // Get headers (if available)
+                    let headers = `From: ${sender}\nSubject: ${item.subject}\n`;
+                    
+                    // Try to get internet headers (may not be available in all contexts)
+                    if (item.getAllInternetHeadersAsync) {
+                        item.getAllInternetHeadersAsync((headerResult) => {
+                            if (headerResult.status === Office.AsyncResultStatus.Succeeded) {
+                                headers = headerResult.value;
+                            }
+                            performScan(sender, headers, body);
+                        });
+                    } else {
+                        performScan(sender, headers, body);
+                    }
+                });
+            } catch (error) {
+                showError('Error reading email: ' + error.message);
+                scanButton.disabled = false;
+                loadingDiv.style.display = 'none';
+            }
+        }
+        
+        async function performScan(sender, headers, body) {
+            const scanButton = document.getElementById('scanButton');
+            const loadingDiv = document.getElementById('loading');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/scan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ sender, headers, body })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Scan failed');
+                }
+                
+                const result = await response.json();
+                displayResult(result);
+            } catch (error) {
+                showError('Failed to scan email. Please check your connection.');
+            } finally {
+                scanButton.disabled = false;
+                loadingDiv.style.display = 'none';
+            }
+        }
+        
+        function displayResult(result) {
+            const resultDiv = document.getElementById('result');
+            
+            const riskClass = `risk-${result.risk_level}`;
+            
+            let html = `
+                <div class="result">
+                    <div class="risk-badge ${riskClass}">
+                        ${result.risk_level.toUpperCase()} RISK
+                    </div>
+                    <div class="score">${result.score}/100</div>
+                    <div class="summary">
+                        ${result.summary.map(item => `
+                            <div class="summary-item">${item}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            resultDiv.innerHTML = html;
+            resultDiv.style.display = 'block';
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
