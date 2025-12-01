@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from app.database import Base
-from app.models import Scan, Report
+from app.models import Scan, Report, AdminPassword
 
 # this is the Alembic Config object
 config = context.config
@@ -19,6 +19,8 @@ if config.config_file_name is not None:
 
 # Set sqlalchemy.url from environment
 database_url = os.getenv("DATABASE_URL", "postgresql://fakecarrier:fakecarrier_pass@localhost:5432/fakecarrier")
+# Convert postgresql:// to postgresql+psycopg:// for psycopg3
+database_url = database_url.replace("postgresql://", "postgresql+psycopg://")
 config.set_main_option("sqlalchemy.url", database_url)
 
 target_metadata = Base.metadata
