@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FakeCarrier Commands</title>
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
 <body>
     <script>
-        Office.onReady(() => {
-            // Commands initialization
+        // Initialize Office
+        Office.onReady((info) => {
+            if (info.host === Office.HostType.Outlook) {
+                console.log('FakeCarrier commands initialized');
+            }
         });
+        
+        // Function file for add-in commands
+        function action(event) {
+            // Command handler
+            event.completed();
+        }
+        
+        // Register function
+        if (typeof Office !== 'undefined') {
+            Office.actions.associate("action", action);
+        }
     </script>
 </body>
 </html>
