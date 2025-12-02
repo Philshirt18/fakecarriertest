@@ -4,8 +4,8 @@
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
-  <Id>a811e8e0-7b4c-4e9f-9c3d-1a2b3c4d5e6f</Id>
-  <Version>1.0.0</Version>
+  <Id>b922f9f1-8c5d-5f0e-0d4e-2b3c4d5e6f7a</Id>
+  <Version>2.0.0</Version>
   <ProviderName>FakeCarrier</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="FakeCarrier Scanner"/>
