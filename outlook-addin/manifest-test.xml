@@ -5,7 +5,7 @@
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
   <Id>a811e8e0-7b4c-4e9f-9c3d-1a2b3c4d5e6f</Id>
-  <Version>1.0.1</Version>
+  <Version>1.0.2</Version>
   <ProviderName>FakeCarrier</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="FakeCarrier Scanner Test"/>
@@ -32,7 +32,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://fakecarriertest.vercel.app/outlook-addin/taskpane-simple.html"/>
+        <SourceLocation DefaultValue="https://fakecarriertest.vercel.app/outlook-addin/minimal.html"/>
         <RequestedHeight>450</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -90,7 +90,7 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Commands.Url" DefaultValue="https://fakecarriertest.vercel.app/outlook-addin/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://fakecarriertest.vercel.app/outlook-addin/taskpane-simple.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://fakecarriertest.vercel.app/outlook-addin/minimal.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="FakeCarrier"/>
