@@ -216,14 +216,14 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           }}></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-center flex-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={`${API_BASE_URL}/static/logo.png?v=2`}
                 alt="FakeCarrier Logo" 
-                className="h-24 md:h-28 w-auto object-contain drop-shadow-2xl"
+                className="h-32 md:h-40 lg:h-48 w-auto object-contain drop-shadow-2xl"
               />
             </div>
             <div className="flex items-center gap-3 absolute right-4 sm:right-6 lg:right-8">
@@ -247,12 +247,6 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <div className="inline-block mb-6 relative">
-            <h2 className="text-5xl md:text-6xl font-bold text-[#111827] mb-2 tracking-tight">
-              Fake<span className="text-[#4F46E5]">Carrier</span>
-            </h2>
-            <div className="h-1 bg-gradient-to-r from-[#4F46E5] to-[#14B8A6] rounded-full"></div>
-          </div>
           <h3 className="text-xl md:text-2xl font-semibold text-[#111827] mb-4">
             Email Security Verification
           </h3>
