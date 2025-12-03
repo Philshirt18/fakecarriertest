@@ -24,9 +24,19 @@ export default function Home() {
   const [reportSuccess, setReportSuccess] = useState(false)
   const [copied, setCopied] = useState(false)
   const [setupRequired, setSetupRequired] = useState(false)
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
+  const [showDisclaimer, setShowDisclaimer] = useState(false)
 
-  // Check if setup is required on mount
+  // Check if setup is required and disclaimer on mount
   useState(() => {
+    // Check if disclaimer was already accepted
+    const accepted = localStorage.getItem('disclaimerAccepted')
+    if (accepted === 'true') {
+      setDisclaimerAccepted(true)
+    } else {
+      setShowDisclaimer(true)
+    }
+    
     fetch(`${API_BASE_URL}/`)
       .then(res => res.json())
       .then(data => {
@@ -36,6 +46,12 @@ export default function Home() {
       })
       .catch(() => {})
   })
+  
+  const handleAcceptDisclaimer = () => {
+    localStorage.setItem('disclaimerAccepted', 'true')
+    setDisclaimerAccepted(true)
+    setShowDisclaimer(false)
+  }
 
   const handleScan = async () => {
     if (!sender || !headers || !body) {
@@ -206,6 +222,90 @@ Scanned by FakeCarrier - https://fakecarrier.com`
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Disclaimer Modal */}
+      {showDisclaimer && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-[#4F46E5] rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-[#111827]">Important Disclaimer</h2>
+              </div>
+              
+              <div className="space-y-4 text-[#111827] mb-6">
+                <p className="leading-relaxed">
+                  Welcome to FakeCarrier Email Security Scanner. Before using this tool, please read and acknowledge the following:
+                </p>
+                
+                <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+                  <h3 className="font-semibold mb-2 flex items-center gap-2">
+                    <span>⚠️</span>
+                    This Tool is an Indicator, Not a Guarantee
+                  </h3>
+                  <p className="text-sm leading-relaxed">
+                    FakeCarrier provides risk assessments based on technical analysis and AI detection. However, scammers constantly develop new techniques, and <strong>no security tool can provide 100% protection</strong>.
+                  </p>
+                </div>
+                
+                <div className="bg-blue-50 border-l-4 border-[#4F46E5] p-4 rounded-r-lg">
+                  <h3 className="font-semibold mb-2 flex items-center gap-2">
+                    <span>🔍</span>
+                    Always Verify Suspicious Emails
+                  </h3>
+                  <p className="text-sm leading-relaxed">
+                    Even if an email is marked as "safe," you should still verify any unusual requests by:
+                  </p>
+                  <ul className="text-sm mt-2 space-y-1 ml-4">
+                    <li>• Contacting the sender through official channels</li>
+                    <li>• Checking the sender's email address carefully</li>
+                    <li>• Never sharing passwords or sensitive information via email</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded-r-lg">
+                  <h3 className="font-semibold mb-2 flex items-center gap-2">
+                    <span>⚖️</span>
+                    Limitation of Liability
+                  </h3>
+                  <p className="text-sm leading-relaxed">
+                    By using this tool, you acknowledge that the developers and operators of FakeCarrier <strong>cannot be held responsible</strong> for any damages, losses, or security breaches that may occur. This tool is provided "as is" without warranties of any kind.
+                  </p>
+                </div>
+                
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Use this tool as one part of your email security strategy, not as your only defense. When in doubt, always err on the side of caution.
+                </p>
+              </div>
+              
+              <div className="border-t border-gray-200 pt-6">
+                <label className="flex items-start gap-3 cursor-pointer group mb-6">
+                  <input
+                    type="checkbox"
+                    checked={disclaimerAccepted}
+                    onChange={(e) => setDisclaimerAccepted(e.target.checked)}
+                    className="mt-1 w-5 h-5 text-[#4F46E5] border-gray-300 rounded focus:ring-[#4F46E5] cursor-pointer"
+                  />
+                  <span className="text-sm text-[#111827] leading-relaxed group-hover:text-[#4F46E5] transition-colors">
+                    I understand and acknowledge that this tool is an indicator only, that no security tool is 100% accurate, and that I should verify suspicious emails as recommended. I also acknowledge that the developers cannot be held liable for any damages or losses.
+                  </span>
+                </label>
+                
+                <button
+                  onClick={handleAcceptDisclaimer}
+                  disabled={!disclaimerAccepted}
+                  className="w-full bg-gradient-to-r from-[#4F46E5] to-indigo-600 text-white py-4 px-6 rounded-xl hover:from-indigo-600 hover:to-[#4F46E5] disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none"
+                >
+                  {disclaimerAccepted ? 'Accept and Continue' : 'Please read and check the box above'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <header className="bg-[#111827] border-b border-gray-800 relative overflow-hidden">
         {/* Subtle tech pattern background */}
