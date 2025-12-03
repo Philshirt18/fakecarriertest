@@ -129,10 +129,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           color: 'bg-amber-50 text-amber-900 border-amber-200',
           badgeColor: 'bg-amber-500 text-white border-amber-600',
           sectionColor: 'bg-amber-50/50 border-amber-200',
-          trafficLight: '🟡',
           icon: '⚠️',
           summary: 'This email has some suspicious signs. Double-check before clicking anything.',
-          whyScam: 'The sender\'s domain doesn\'t have proper security measures in place, which legitimate companies always have.',
+          whyScam: 'The sender\'s domain doesn\'t have proper security measures in place, which legitimate companies always have. (See Technical Details)',
           howToVerify: [
             'Call the company using a phone number from their official website (not from this email)',
             'Check if the sender\'s email address exactly matches the company\'s real domain',
@@ -145,10 +144,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           color: 'bg-orange-50 text-orange-900 border-orange-200',
           badgeColor: 'bg-orange-600 text-white border-orange-700',
           sectionColor: 'bg-orange-50/50 border-orange-200',
-          trafficLight: '🟠',
           icon: '⚠️',
           summary: 'This email has multiple red flags. It\'s likely trying to trick you.',
-          whyScam: 'Multiple security checks failed, and the email shows patterns commonly used by scammers to impersonate legitimate companies.',
+          whyScam: 'Multiple security checks failed, and the email shows patterns commonly used by scammers to impersonate legitimate companies. (See Technical Details)',
           howToVerify: [
             'Do NOT click any links or download attachments',
             'Contact the company directly using their official phone number or website',
@@ -161,10 +159,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           color: 'bg-red-50 text-red-900 border-red-200',
           badgeColor: 'bg-red-600 text-white border-red-700',
           sectionColor: 'bg-red-50/50 border-red-200',
-          trafficLight: '🔴',
           icon: '🚨',
           summary: 'This is almost certainly a scam. Someone is pretending to be someone else to steal from you.',
-          whyScam: 'This email failed all major security checks and shows clear signs of impersonation. The sender is not who they claim to be.',
+          whyScam: 'This email failed all major security checks and shows clear signs of impersonation. The sender is not who they claim to be. (See Technical Details)',
           howToVerify: [
             'DELETE this email immediately',
             'Do NOT click anything or reply',
@@ -178,10 +175,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           color: 'bg-teal-50 text-teal-900 border-teal-200',
           badgeColor: 'bg-[#14B8A6] text-white border-teal-600',
           sectionColor: 'bg-teal-50/50 border-teal-200',
-          trafficLight: '🟢',
           icon: '✓',
           summary: 'This email passed our security checks and appears to be legitimate.',
-          whyScam: 'This email has proper security configurations and doesn\'t show typical scam patterns.',
+          whyScam: 'This email has proper security configurations and doesn\'t show typical scam patterns. (See Technical Details)',
           howToVerify: [
             'Still verify any requests for passwords or sensitive information',
             'Check that links go to the expected website before clicking',
@@ -313,9 +309,8 @@ Scanned by FakeCarrier - https://fakecarrier.com`
         {/* Results */}
         {result && riskConfig && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-8">
-            {/* Traffic Light + One-Sentence Summary */}
+            {/* One-Sentence Summary */}
             <div className="text-center pb-8 border-b border-gray-200">
-              <div className="text-7xl mb-5 drop-shadow-lg">{riskConfig.trafficLight}</div>
               <div className={`inline-flex items-center space-x-3 px-6 py-3 rounded-xl border-2 ${riskConfig.badgeColor} text-lg font-bold mb-5 shadow-lg`}>
                 <span className="text-2xl">{riskConfig.icon}</span>
                 <span>{riskConfig.label}</span>
@@ -332,8 +327,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                 Why this might be a scam
               </h3>
               <p className="text-[#111827] leading-relaxed">
-                {riskConfig.whyScam}{' '}
-                <span className="text-gray-600 text-sm">(see technical details)</span>
+                {riskConfig.whyScam}
               </p>
             </div>
 
