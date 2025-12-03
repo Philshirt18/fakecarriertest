@@ -332,7 +332,8 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                 Why this might be a scam
               </h3>
               <p className="text-[#111827] leading-relaxed">
-                {riskConfig.whyScam}
+                {riskConfig.whyScam}{' '}
+                <span className="text-gray-600 text-sm">(see technical details)</span>
               </p>
             </div>
 
