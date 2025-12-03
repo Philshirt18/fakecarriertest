@@ -125,31 +125,60 @@ Scanned by FakeCarrier - https://fakecarrier.com`
     switch (level) {
       case 'low':
         return {
-          label: 'Low Risk',
-          color: 'bg-amber-50 text-amber-900 border-amber-200',
+          label: 'BE CAREFUL',
+          color: 'bg-yellow-100 text-yellow-900 border-yellow-300',
+          trafficLight: '🟡',
           icon: '⚠️',
-          description: 'Some concerns detected'
+          summary: 'This email has some suspicious signs. Double-check before clicking anything.',
+          consequences: 'If this is a scam, clicking links could lead to fake websites that steal your information.',
+          howToVerify: [
+            'Call the company using a phone number from their official website (not from this email)',
+            'Check if the sender\'s email address exactly matches the company\'s real domain',
+            'Look for spelling mistakes or unusual requests'
+          ]
         }
       case 'medium':
         return {
-          label: 'Medium Risk',
-          color: 'bg-orange-50 text-orange-900 border-orange-200',
+          label: 'DANGER',
+          color: 'bg-orange-100 text-orange-900 border-orange-300',
+          trafficLight: '🟠',
           icon: '⚠️',
-          description: 'Multiple suspicious indicators'
+          summary: 'This email has multiple red flags. It\'s likely trying to trick you.',
+          consequences: 'Scammers could steal your passwords, access your accounts, or take your money.',
+          howToVerify: [
+            'Do NOT click any links or download attachments',
+            'Contact the company directly using their official phone number or website',
+            'Ask your IT department or a tech-savvy colleague to check it'
+          ]
         }
       case 'high':
         return {
-          label: 'High Risk',
-          color: 'bg-red-50 text-red-900 border-red-200',
+          label: 'STOP! SCAM ALERT',
+          color: 'bg-red-100 text-red-900 border-red-300',
+          trafficLight: '🔴',
           icon: '🚨',
-          description: 'Strong phishing indicators'
+          summary: 'This is almost certainly a scam. Someone is pretending to be someone else to steal from you.',
+          consequences: 'This could result in stolen passwords, drained bank accounts, identity theft, or financial loss.',
+          howToVerify: [
+            'DELETE this email immediately',
+            'Do NOT click anything or reply',
+            'Report it to your IT security team',
+            'If it claims to be from a company you use, call them directly using the number on their official website'
+          ]
         }
       default:
         return {
-          label: 'Secured',
-          color: 'bg-emerald-50 text-emerald-900 border-emerald-200',
+          label: 'LOOKS SAFE',
+          color: 'bg-green-100 text-green-900 border-green-300',
+          trafficLight: '🟢',
           icon: '✓',
-          description: 'Email appears legitimate'
+          summary: 'This email passed our security checks and appears to be legitimate.',
+          consequences: 'This email seems safe, but always stay alert for unusual requests.',
+          howToVerify: [
+            'Still verify any requests for passwords or sensitive information',
+            'Check that links go to the expected website before clicking',
+            'If something feels wrong, trust your instincts and verify through another channel'
+          ]
         }
     }
   }
@@ -276,68 +305,108 @@ Scanned by FakeCarrier - https://fakecarrier.com`
         {/* Results */}
         {result && riskConfig && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-8">
-            {/* Risk Badge */}
+            {/* Traffic Light + One-Sentence Summary */}
             <div className="text-center pb-8 border-b border-gray-200">
-              <div className={`inline-flex items-center space-x-3 px-6 py-3 rounded-full border-2 ${riskConfig.color} text-lg font-semibold mb-4`}>
-                <span className="text-2xl">{riskConfig.icon}</span>
+              <div className="text-8xl mb-4">{riskConfig.trafficLight}</div>
+              <div className={`inline-flex items-center space-x-3 px-8 py-4 rounded-2xl border-3 ${riskConfig.color} text-xl font-bold mb-6 shadow-lg`}>
+                <span className="text-3xl">{riskConfig.icon}</span>
                 <span>{riskConfig.label}</span>
               </div>
-              <p className="text-gray-600 mt-2">{riskConfig.description}</p>
-              
-              {/* Score Bar */}
-              <div className="max-w-md mx-auto mt-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Overall Risk Score</span>
-                  <span className="text-2xl font-bold text-primary">{result.score}/100</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div
-                    className={`h-3 rounded-full transition-all ${
-                      result.score <= 33 ? 'bg-emerald-500' :
-                      result.score <= 66 ? 'bg-orange-500' : 'bg-red-500'
-                    }`}
-                    style={{ width: `${result.score}%` }}
-                  />
-                </div>
-                <p className="text-xs text-gray-500 mt-2 text-center">
-                  Combined score from technical checks and AI content analysis
-                </p>
-              </div>
+              <p className="text-xl text-gray-800 font-medium max-w-2xl mx-auto leading-relaxed">
+                {riskConfig.summary}
+              </p>
             </div>
 
-            {/* Key Findings */}
-            <div>
-              <h3 className="text-lg font-semibold text-primary mb-4">Key Findings</h3>
-              <ul className="space-y-3">
-                {result.summary.map((item, i) => (
-                  <li key={i} className="flex items-start text-primary">
-                    <span className="text-secondary mr-3 mt-0.5">•</span>
-                    <span>{item}</span>
+            {/* What Could Happen */}
+            <div className={`rounded-xl p-6 border-2 ${riskConfig.color}`}>
+              <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center">
+                <span className="text-2xl mr-2">⚡</span>
+                What could happen if this is a scam?
+              </h3>
+              <p className="text-gray-800 leading-relaxed">
+                {riskConfig.consequences}
+              </p>
+            </div>
+
+            {/* How to Verify */}
+            <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                <span className="text-2xl mr-2">🔍</span>
+                How to check if this email is real:
+              </h3>
+              <ol className="space-y-3">
+                {riskConfig.howToVerify.map((step, i) => (
+                  <li key={i} className="flex items-start text-gray-800">
+                    <span className="flex-shrink-0 w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 mt-0.5">
+                      {i + 1}
+                    </span>
+                    <span className="leading-relaxed">{step}</span>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
 
-            {/* Recommendations */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-primary mb-4">Recommended Actions</h3>
-              <ul className="space-y-3">
-                {result.recommendations.map((item, i) => (
-                  <li key={i} className="flex items-start text-primary">
-                    <span className="text-accent mr-3 mt-0.5">✓</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Big Action Buttons */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {result.risk_level === 'high' && (
+                <button
+                  className="bg-red-600 hover:bg-red-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                  onClick={() => alert('Delete this email from your inbox immediately.')}
+                >
+                  <span className="text-3xl">🗑️</span>
+                  <span>DELETE THIS EMAIL</span>
+                </button>
+              )}
+              {(result.risk_level === 'high' || result.risk_level === 'medium') && (
+                <button
+                  className="bg-orange-600 hover:bg-orange-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                  onClick={() => setShowReport(true)}
+                >
+                  <span className="text-3xl">⚠️</span>
+                  <span>REPORT TO IT</span>
+                </button>
+              )}
+              <button
+                onClick={copyResults}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+              >
+                <span className="text-3xl">{copied ? '✓' : '📋'}</span>
+                <span>{copied ? 'COPIED!' : 'COPY RESULTS'}</span>
+              </button>
+              {result.risk_level === 'low' && (
+                <button
+                  className="bg-green-600 hover:bg-green-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                  onClick={() => alert('Remember: Even safe-looking emails can be dangerous. Always verify unusual requests!')}
+                >
+                  <span className="text-3xl">✓</span>
+                  <span>PROCEED WITH CAUTION</span>
+                </button>
+              )}
             </div>
 
-            {/* Technical Details */}
-            <details className="border border-gray-200 rounded-lg">
-              <summary className="px-6 py-4 cursor-pointer font-medium text-primary hover:bg-gray-50 transition-colors rounded-lg">
-                Technical Details
+            {/* Technical Details - Collapsed by Default */}
+            <details className="border-2 border-gray-300 rounded-xl bg-gray-50">
+              <summary className="px-6 py-4 cursor-pointer font-bold text-gray-700 hover:bg-gray-100 transition-colors rounded-xl flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <span className="text-xl">🔧</span>
+                  <span>Technical Details (for IT professionals)</span>
+                </span>
+                <span className="text-gray-400">▼</span>
               </summary>
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 rounded-b-lg">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="px-6 py-6 border-t-2 border-gray-300">
+                <div className="mb-6">
+                  <h4 className="font-semibold text-gray-900 mb-3">Key Findings:</h4>
+                  <ul className="space-y-2">
+                    {result.summary.map((item, i) => (
+                      <li key={i} className="flex items-start text-gray-700 text-sm">
+                        <span className="text-red-600 mr-2 mt-0.5">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-white p-4 rounded-lg">
                   <div>
                     <span className="font-medium text-gray-700">Domain:</span>
                     <span className="ml-2 text-gray-600">{result.signals.from_domain}</span>
@@ -358,6 +427,10 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                     <span className="font-medium text-gray-700">DKIM:</span>
                     <span className="ml-2 text-gray-600">{result.signals.dkim_present ? '✓ Present' : '✗ Missing'}</span>
                   </div>
+                  <div>
+                    <span className="font-medium text-gray-700">Risk Score:</span>
+                    <span className="ml-2 text-gray-600">{result.score}/100</span>
+                  </div>
                   {result.signals.ai_analysis?.ai_risk_score > 0 && (
                     <div>
                       <span className="font-medium text-gray-700">AI Content Analysis:</span>
@@ -367,25 +440,6 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                 </div>
               </div>
             </details>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button
-                onClick={copyResults}
-                className="flex-1 bg-white border-2 border-secondary text-secondary py-3 px-6 rounded-lg hover:bg-secondary hover:text-white font-semibold transition-all"
-              >
-                {copied ? '✓ Copied!' : 'Copy Results'}
-              </button>
-              
-              {!showReport ? (
-                <button
-                  onClick={() => setShowReport(true)}
-                  className="flex-1 bg-white border-2 border-orange-500 text-orange-600 py-3 px-6 rounded-lg hover:bg-orange-500 hover:text-white font-semibold transition-all"
-                >
-                  Report This Email
-                </button>
-              ) : null}
-            </div>
 
             {/* Report Form */}
             {showReport && (
