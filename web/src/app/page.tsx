@@ -126,13 +126,13 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       case 'low':
         return {
           label: 'BE CAREFUL',
-          color: 'bg-gradient-to-br from-amber-900/10 to-amber-800/5 text-amber-900 border-amber-900/20',
-          badgeColor: 'bg-amber-900/90 text-amber-50 border-amber-800',
-          sectionColor: 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200',
+          color: 'bg-amber-50 text-amber-900 border-amber-200',
+          badgeColor: 'bg-amber-500 text-white border-amber-600',
+          sectionColor: 'bg-amber-50/50 border-amber-200',
           trafficLight: '🟡',
           icon: '⚠️',
           summary: 'This email has some suspicious signs. Double-check before clicking anything.',
-          consequences: 'If this is a scam, clicking links could lead to fake websites that steal your information.',
+          whyScam: 'The sender\'s domain doesn\'t have proper security measures in place, which legitimate companies always have.',
           howToVerify: [
             'Call the company using a phone number from their official website (not from this email)',
             'Check if the sender\'s email address exactly matches the company\'s real domain',
@@ -142,13 +142,13 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       case 'medium':
         return {
           label: 'DANGER',
-          color: 'bg-gradient-to-br from-orange-900/10 to-orange-800/5 text-orange-900 border-orange-900/20',
-          badgeColor: 'bg-orange-900/90 text-orange-50 border-orange-800',
-          sectionColor: 'bg-gradient-to-br from-orange-50 to-orange-100/50 border-orange-200',
+          color: 'bg-orange-50 text-orange-900 border-orange-200',
+          badgeColor: 'bg-orange-600 text-white border-orange-700',
+          sectionColor: 'bg-orange-50/50 border-orange-200',
           trafficLight: '🟠',
           icon: '⚠️',
           summary: 'This email has multiple red flags. It\'s likely trying to trick you.',
-          consequences: 'Scammers could steal your passwords, access your accounts, or take your money.',
+          whyScam: 'Multiple security checks failed, and the email shows patterns commonly used by scammers to impersonate legitimate companies.',
           howToVerify: [
             'Do NOT click any links or download attachments',
             'Contact the company directly using their official phone number or website',
@@ -158,13 +158,13 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       case 'high':
         return {
           label: 'STOP! SCAM ALERT',
-          color: 'bg-gradient-to-br from-red-900/10 to-red-800/5 text-red-900 border-red-900/20',
-          badgeColor: 'bg-red-900/90 text-red-50 border-red-800',
-          sectionColor: 'bg-gradient-to-br from-red-50 to-red-100/50 border-red-200',
+          color: 'bg-red-50 text-red-900 border-red-200',
+          badgeColor: 'bg-red-600 text-white border-red-700',
+          sectionColor: 'bg-red-50/50 border-red-200',
           trafficLight: '🔴',
           icon: '🚨',
           summary: 'This is almost certainly a scam. Someone is pretending to be someone else to steal from you.',
-          consequences: 'This could result in stolen passwords, drained bank accounts, identity theft, or financial loss.',
+          whyScam: 'This email failed all major security checks and shows clear signs of impersonation. The sender is not who they claim to be.',
           howToVerify: [
             'DELETE this email immediately',
             'Do NOT click anything or reply',
@@ -175,13 +175,13 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       default:
         return {
           label: 'LOOKS SAFE',
-          color: 'bg-gradient-to-br from-emerald-900/10 to-emerald-800/5 text-emerald-900 border-emerald-900/20',
-          badgeColor: 'bg-emerald-900/90 text-emerald-50 border-emerald-800',
-          sectionColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200',
+          color: 'bg-teal-50 text-teal-900 border-teal-200',
+          badgeColor: 'bg-[#14B8A6] text-white border-teal-600',
+          sectionColor: 'bg-teal-50/50 border-teal-200',
           trafficLight: '🟢',
           icon: '✓',
           summary: 'This email passed our security checks and appears to be legitimate.',
-          consequences: 'This email seems safe, but always stay alert for unusual requests.',
+          whyScam: 'This email has proper security configurations and doesn\'t show typical scam patterns.',
           howToVerify: [
             'Still verify any requests for passwords or sensitive information',
             'Check that links go to the expected website before clicking',
@@ -315,37 +315,37 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-8">
             {/* Traffic Light + One-Sentence Summary */}
             <div className="text-center pb-8 border-b border-gray-200">
-              <div className="text-8xl mb-6 drop-shadow-lg">{riskConfig.trafficLight}</div>
-              <div className={`inline-flex items-center space-x-3 px-8 py-4 rounded-2xl border-2 ${riskConfig.badgeColor} text-xl font-bold mb-6 shadow-xl`}>
-                <span className="text-3xl">{riskConfig.icon}</span>
+              <div className="text-7xl mb-5 drop-shadow-lg">{riskConfig.trafficLight}</div>
+              <div className={`inline-flex items-center space-x-3 px-6 py-3 rounded-xl border-2 ${riskConfig.badgeColor} text-lg font-bold mb-5 shadow-lg`}>
+                <span className="text-2xl">{riskConfig.icon}</span>
                 <span>{riskConfig.label}</span>
               </div>
-              <p className="text-xl text-gray-800 font-medium max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-[#111827] font-medium max-w-2xl mx-auto leading-relaxed">
                 {riskConfig.summary}
               </p>
             </div>
 
-            {/* What Could Happen */}
-            <div className={`rounded-xl p-6 border-2 ${riskConfig.sectionColor} backdrop-blur-sm`}>
-              <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center">
-                <span className="text-2xl mr-2">⚡</span>
-                What could happen if this is a scam?
+            {/* Why This Might Be a Scam */}
+            <div className={`rounded-xl p-6 border-2 ${riskConfig.sectionColor}`}>
+              <h3 className="text-lg font-bold text-[#111827] mb-3 flex items-center">
+                <span className="text-2xl mr-2">⚠️</span>
+                Why this might be a scam
               </h3>
-              <p className="text-gray-800 leading-relaxed">
-                {riskConfig.consequences}
+              <p className="text-[#111827] leading-relaxed">
+                {riskConfig.whyScam}
               </p>
             </div>
 
             {/* How to Verify */}
-            <div className="bg-gradient-to-br from-slate-50 to-slate-100/50 border-2 border-slate-200 rounded-xl p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+            <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-[#111827] mb-4 flex items-center">
                 <span className="text-2xl mr-2">🔍</span>
                 How to check if this email is real:
               </h3>
               <ol className="space-y-3">
                 {riskConfig.howToVerify.map((step, i) => (
-                  <li key={i} className="flex items-start text-gray-800">
-                    <span className="flex-shrink-0 w-7 h-7 bg-slate-700 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 mt-0.5">
+                  <li key={i} className="flex items-start text-[#111827]">
+                    <span className="flex-shrink-0 w-7 h-7 bg-[#4F46E5] text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 mt-0.5">
                       {i + 1}
                     </span>
                     <span className="leading-relaxed">{step}</span>
@@ -358,7 +358,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {result.risk_level === 'high' && (
                 <button
-                  className="bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-red-700"
+                  className="bg-red-600 hover:bg-red-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
                   onClick={() => alert('Delete this email from your inbox immediately.')}
                 >
                   <span className="text-3xl">🗑️</span>
@@ -367,7 +367,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               )}
               {(result.risk_level === 'high' || result.risk_level === 'medium') && (
                 <button
-                  className="bg-gradient-to-r from-orange-900 to-orange-800 hover:from-orange-800 hover:to-orange-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-orange-700"
+                  className="bg-orange-600 hover:bg-orange-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
                   onClick={() => setShowReport(true)}
                 >
                   <span className="text-3xl">⚠️</span>
@@ -376,14 +376,14 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               )}
               <button
                 onClick={copyResults}
-                className="bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-slate-500"
+                className="bg-[#4F46E5] hover:bg-indigo-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
               >
                 <span className="text-3xl">{copied ? '✓' : '📋'}</span>
                 <span>{copied ? 'COPIED!' : 'COPY RESULTS'}</span>
               </button>
               {result.risk_level === 'low' && (
                 <button
-                  className="bg-gradient-to-r from-emerald-900 to-emerald-800 hover:from-emerald-800 hover:to-emerald-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-emerald-700"
+                  className="bg-[#14B8A6] hover:bg-teal-600 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
                   onClick={() => alert('Remember: Even safe-looking emails can be dangerous. Always verify unusual requests!')}
                 >
                   <span className="text-3xl">✓</span>
@@ -394,10 +394,10 @@ Scanned by FakeCarrier - https://fakecarrier.com`
 
             {/* Technical Details - Collapsed by Default */}
             <details className="border-2 border-gray-300 rounded-xl bg-gray-50">
-              <summary className="px-6 py-4 cursor-pointer font-bold text-gray-700 hover:bg-gray-100 transition-colors rounded-xl flex items-center justify-between">
+              <summary className="px-6 py-4 cursor-pointer font-bold text-[#111827] hover:bg-gray-100 transition-colors rounded-xl flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <span className="text-xl">🔧</span>
-                  <span>Technical Details (for IT professionals)</span>
+                  <span>Technical Details</span>
                 </span>
                 <span className="text-gray-400">▼</span>
               </summary>
