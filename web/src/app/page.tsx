@@ -238,47 +238,28 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               
               <div className="space-y-4 text-[#111827] mb-6">
                 <p className="leading-relaxed">
-                  Welcome to FakeCarrier Email Security Scanner. Before using this tool, please read and acknowledge the following:
+                  Welcome to Fake Carriers. Please read and acknowledge:
                 </p>
                 
                 <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <span>⚠️</span>
-                    This Tool is an Indicator, Not a Guarantee
+                    Indicator Only - Not 100% Accurate
                   </h3>
                   <p className="text-sm leading-relaxed">
-                    FakeCarrier provides risk assessments based on technical analysis and AI detection. However, scammers constantly develop new techniques, and <strong>no security tool can provide 100% protection</strong>.
+                    Fake Carriers analyzes emails using AI and technical checks, but scammers constantly develop new techniques. <strong>No tool provides 100% protection.</strong> Always verify suspicious emails through official channels.
                   </p>
-                </div>
-                
-                <div className="bg-blue-50 border-l-4 border-[#4F46E5] p-4 rounded-r-lg">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <span>🔍</span>
-                    Always Verify Suspicious Emails
-                  </h3>
-                  <p className="text-sm leading-relaxed">
-                    Even if an email is marked as "safe," you should still verify any unusual requests by:
-                  </p>
-                  <ul className="text-sm mt-2 space-y-1 ml-4">
-                    <li>• Contacting the sender through official channels</li>
-                    <li>• Checking the sender's email address carefully</li>
-                    <li>• Never sharing passwords or sensitive information via email</li>
-                  </ul>
                 </div>
                 
                 <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded-r-lg">
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <span>⚖️</span>
-                    Limitation of Liability
+                    No Liability
                   </h3>
                   <p className="text-sm leading-relaxed">
-                    By using this tool, you acknowledge that the developers and operators of FakeCarrier <strong>cannot be held responsible</strong> for any damages, losses, or security breaches that may occur. This tool is provided "as is" without warranties of any kind.
+                    The developers of Fake Carriers <strong>cannot be held responsible</strong> for any damages, losses, or security breaches. This tool is provided "as is" without warranties.
                   </p>
                 </div>
-                
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Use this tool as one part of your email security strategy, not as your only defense. When in doubt, always err on the side of caution.
-                </p>
               </div>
               
               <div className="border-t border-gray-200 pt-6">
@@ -322,7 +303,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={`${API_BASE_URL}/static/logo.png?v=2`}
-                alt="FakeCarrier Logo" 
+                alt="Fake Carriers Logo" 
                 className="h-32 md:h-40 lg:h-48 w-auto object-contain drop-shadow-2xl"
               />
             </div>
@@ -622,7 +603,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               <p className="text-sm text-gray-400">Powered by AI</p>
               <div className="w-2 h-2 bg-[#14B8A6] rounded-full animate-pulse"></div>
             </div>
-            <p className="text-sm text-gray-500">© 2025 FakeCarrier. Email Security Verification</p>
+            <p className="text-sm text-gray-500">© 2025 Fake Carriers. Email Security Verification</p>
             <p className="mt-2">
               <a href="/admin" className="text-gray-400 hover:text-[#14B8A6] transition-colors text-sm">Admin Dashboard</a>
             </p>
