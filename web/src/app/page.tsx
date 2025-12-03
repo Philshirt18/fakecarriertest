@@ -476,50 +476,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           </div>
         )}
 
-        {/* Premium Feature Teaser */}
-        {result && (
-          <div className="mt-8 bg-gradient-to-r from-secondary to-indigo-600 rounded-2xl p-8 text-white">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-2">Need More?</h3>
-                <p className="text-indigo-100 mb-4">
-                  Upgrade to FakeCarrier Pro for advanced features
-                </p>
-                <ul className="space-y-2 text-sm text-indigo-100">
-                  <li className="flex items-center">
-                    <span className="mr-2">✓</span>
-                    <span>PDF reports with detailed analysis</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="mr-2">✓</span>
-                    <span>Batch email scanning (up to 100 at once)</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="mr-2">✓</span>
-                    <span>API access for integrations</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="mr-2">✓</span>
-                    <span>Scan history and analytics dashboard</span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="mr-2">✓</span>
-                    <span>Team collaboration features</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="ml-8 hidden sm:block">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
-                  <div className="text-3xl font-bold mb-1">$29</div>
-                  <div className="text-sm text-indigo-200">per month</div>
-                  <button className="mt-4 bg-white text-secondary px-6 py-2 rounded-lg font-semibold hover:bg-indigo-50 transition-all">
-                    Coming Soon
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+
       </main>
 
       {/* Footer */}
