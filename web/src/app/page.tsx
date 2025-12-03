@@ -126,7 +126,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       case 'low':
         return {
           label: 'BE CAREFUL',
-          color: 'bg-yellow-100 text-yellow-900 border-yellow-300',
+          color: 'bg-gradient-to-br from-amber-900/10 to-amber-800/5 text-amber-900 border-amber-900/20',
+          badgeColor: 'bg-amber-900/90 text-amber-50 border-amber-800',
+          sectionColor: 'bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200',
           trafficLight: '🟡',
           icon: '⚠️',
           summary: 'This email has some suspicious signs. Double-check before clicking anything.',
@@ -140,7 +142,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       case 'medium':
         return {
           label: 'DANGER',
-          color: 'bg-orange-100 text-orange-900 border-orange-300',
+          color: 'bg-gradient-to-br from-orange-900/10 to-orange-800/5 text-orange-900 border-orange-900/20',
+          badgeColor: 'bg-orange-900/90 text-orange-50 border-orange-800',
+          sectionColor: 'bg-gradient-to-br from-orange-50 to-orange-100/50 border-orange-200',
           trafficLight: '🟠',
           icon: '⚠️',
           summary: 'This email has multiple red flags. It\'s likely trying to trick you.',
@@ -154,7 +158,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       case 'high':
         return {
           label: 'STOP! SCAM ALERT',
-          color: 'bg-red-100 text-red-900 border-red-300',
+          color: 'bg-gradient-to-br from-red-900/10 to-red-800/5 text-red-900 border-red-900/20',
+          badgeColor: 'bg-red-900/90 text-red-50 border-red-800',
+          sectionColor: 'bg-gradient-to-br from-red-50 to-red-100/50 border-red-200',
           trafficLight: '🔴',
           icon: '🚨',
           summary: 'This is almost certainly a scam. Someone is pretending to be someone else to steal from you.',
@@ -169,7 +175,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
       default:
         return {
           label: 'LOOKS SAFE',
-          color: 'bg-green-100 text-green-900 border-green-300',
+          color: 'bg-gradient-to-br from-emerald-900/10 to-emerald-800/5 text-emerald-900 border-emerald-900/20',
+          badgeColor: 'bg-emerald-900/90 text-emerald-50 border-emerald-800',
+          sectionColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-200',
           trafficLight: '🟢',
           icon: '✓',
           summary: 'This email passed our security checks and appears to be legitimate.',
@@ -307,8 +315,8 @@ Scanned by FakeCarrier - https://fakecarrier.com`
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-8">
             {/* Traffic Light + One-Sentence Summary */}
             <div className="text-center pb-8 border-b border-gray-200">
-              <div className="text-8xl mb-4">{riskConfig.trafficLight}</div>
-              <div className={`inline-flex items-center space-x-3 px-8 py-4 rounded-2xl border-3 ${riskConfig.color} text-xl font-bold mb-6 shadow-lg`}>
+              <div className="text-8xl mb-6 drop-shadow-lg">{riskConfig.trafficLight}</div>
+              <div className={`inline-flex items-center space-x-3 px-8 py-4 rounded-2xl border-2 ${riskConfig.badgeColor} text-xl font-bold mb-6 shadow-xl`}>
                 <span className="text-3xl">{riskConfig.icon}</span>
                 <span>{riskConfig.label}</span>
               </div>
@@ -318,7 +326,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             </div>
 
             {/* What Could Happen */}
-            <div className={`rounded-xl p-6 border-2 ${riskConfig.color}`}>
+            <div className={`rounded-xl p-6 border-2 ${riskConfig.sectionColor} backdrop-blur-sm`}>
               <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center">
                 <span className="text-2xl mr-2">⚡</span>
                 What could happen if this is a scam?
@@ -329,7 +337,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             </div>
 
             {/* How to Verify */}
-            <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+            <div className="bg-gradient-to-br from-slate-50 to-slate-100/50 border-2 border-slate-200 rounded-xl p-6 backdrop-blur-sm">
               <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
                 <span className="text-2xl mr-2">🔍</span>
                 How to check if this email is real:
@@ -337,7 +345,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               <ol className="space-y-3">
                 {riskConfig.howToVerify.map((step, i) => (
                   <li key={i} className="flex items-start text-gray-800">
-                    <span className="flex-shrink-0 w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 mt-0.5">
+                    <span className="flex-shrink-0 w-7 h-7 bg-slate-700 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3 mt-0.5">
                       {i + 1}
                     </span>
                     <span className="leading-relaxed">{step}</span>
@@ -350,7 +358,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {result.risk_level === 'high' && (
                 <button
-                  className="bg-red-600 hover:bg-red-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                  className="bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-red-700"
                   onClick={() => alert('Delete this email from your inbox immediately.')}
                 >
                   <span className="text-3xl">🗑️</span>
@@ -359,7 +367,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               )}
               {(result.risk_level === 'high' || result.risk_level === 'medium') && (
                 <button
-                  className="bg-orange-600 hover:bg-orange-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                  className="bg-gradient-to-r from-orange-900 to-orange-800 hover:from-orange-800 hover:to-orange-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-orange-700"
                   onClick={() => setShowReport(true)}
                 >
                   <span className="text-3xl">⚠️</span>
@@ -368,14 +376,14 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               )}
               <button
                 onClick={copyResults}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                className="bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-slate-500"
               >
                 <span className="text-3xl">{copied ? '✓' : '📋'}</span>
                 <span>{copied ? 'COPIED!' : 'COPY RESULTS'}</span>
               </button>
               {result.risk_level === 'low' && (
                 <button
-                  className="bg-green-600 hover:bg-green-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3"
+                  className="bg-gradient-to-r from-emerald-900 to-emerald-800 hover:from-emerald-800 hover:to-emerald-700 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 border border-emerald-700"
                   onClick={() => alert('Remember: Even safe-looking emails can be dangerous. Always verify unusual requests!')}
                 >
                   <span className="text-3xl">✓</span>
