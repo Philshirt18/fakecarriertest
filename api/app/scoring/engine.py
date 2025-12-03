@@ -15,24 +15,25 @@ class ScoringEngine:
     """Main scoring engine for phishing detection"""
     
     # Scoring weights (total should be 100)
+    # Adjusted to reduce false positives on legitimate emails
     WEIGHTS = {
-        'no_mx': 15,
-        'no_spf': 10,
-        'no_dmarc': 10,
-        'no_dkim': 8,
-        'dkim_domain_mismatch': 12,
-        'reply_to_mismatch': 8,
+        'no_mx': 20,  # No mail server is very suspicious
+        'no_spf': 5,   # Reduced - many small domains don't have SPF
+        'no_dmarc': 5, # Reduced - many small domains don't have DMARC
+        'no_dkim': 3,  # Reduced - personal emails often lack DKIM
+        'dkim_domain_mismatch': 15,  # Increased - this is a real red flag
+        'reply_to_mismatch': 12,     # Increased - common phishing tactic
         'return_path_mismatch': 5,
-        'auth_fail': 15,
-        'url_shortener': 5,
-        'url_punycode': 8,
-        'url_lookalike': 10,
-        'text_urgency': 4,
-        'text_threats': 6,
-        'text_credential_request': 8,
-        'text_payment_request': 5,
-        'young_domain': 10,
-        'ai_high_risk': 20  # AI-detected sophisticated phishing
+        'auth_fail': 20,  # Increased - failed auth is serious
+        'url_shortener': 8,
+        'url_punycode': 10,
+        'url_lookalike': 15,  # Increased - clear impersonation attempt
+        'text_urgency': 5,
+        'text_threats': 8,
+        'text_credential_request': 12,  # Increased - major red flag
+        'text_payment_request': 8,
+        'young_domain': 12,  # Increased - new domains are suspicious
+        'ai_high_risk': 25   # Increased - AI can catch sophisticated attacks
     }
     
     def __init__(self):
@@ -228,13 +229,15 @@ class ScoringEngine:
         return score, [r[1] for r in reasons]
     
     def _get_risk_level(self, score: int) -> str:
-        """Map score to risk level"""
-        if score <= 33:
-            return 'low'
-        elif score <= 66:
-            return 'medium'
+        """Map score to risk level - adjusted for fewer false positives"""
+        if score <= 25:
+            return 'safe'  # Truly safe emails
+        elif score <= 50:
+            return 'low'   # Minor concerns but probably legitimate
+        elif score <= 75:
+            return 'medium'  # Multiple red flags
         else:
-            return 'high'
+            return 'high'  # Clear phishing attempt
     
     def _generate_recommendations(self, signals: Dict[str, Any], risk_level: str) -> List[str]:
         """Generate actionable recommendations"""

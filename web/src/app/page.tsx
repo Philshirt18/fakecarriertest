@@ -169,6 +169,21 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             'If it claims to be from a company you use, call them directly using the number on their official website'
           ]
         }
+      case 'safe':
+        return {
+          label: 'SAFE',
+          color: 'bg-teal-50 text-teal-900 border-teal-200',
+          badgeColor: 'bg-[#14B8A6] text-white border-teal-600',
+          sectionColor: 'bg-teal-50/50 border-teal-200',
+          icon: '✓',
+          summary: 'This email looks safe and passed our security checks.',
+          whyScam: 'This email has proper security configurations and doesn\'t show typical scam patterns. (See Technical Details)',
+          howToVerify: [
+            'Still verify any requests for passwords or sensitive information',
+            'Check that links go to the expected website before clicking',
+            'If something feels wrong, trust your instincts and verify through another channel'
+          ]
+        }
       default:
         return {
           label: 'LOOKS SAFE',
@@ -376,13 +391,13 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                 <span className="text-3xl">{copied ? '✓' : '📋'}</span>
                 <span>{copied ? 'COPIED!' : 'COPY RESULTS'}</span>
               </button>
-              {result.risk_level === 'low' && (
+              {(result.risk_level === 'low' || result.risk_level === 'safe') && (
                 <button
                   className="bg-[#14B8A6] hover:bg-teal-600 text-white py-6 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
                   onClick={() => alert('Remember: Even safe-looking emails can be dangerous. Always verify unusual requests!')}
                 >
                   <span className="text-3xl">✓</span>
-                  <span>PROCEED WITH CAUTION</span>
+                  <span>{result.risk_level === 'safe' ? 'LOOKS GOOD' : 'PROCEED WITH CAUTION'}</span>
                 </button>
               )}
             </div>
