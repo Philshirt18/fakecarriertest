@@ -238,26 +238,26 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               
               <div className="space-y-4 text-[#111827] mb-6">
                 <p className="leading-relaxed">
-                  Welcome to Fake Carriers. Please read and acknowledge:
+                  Welcome to Fake Carriers! Before we get started, here's what you should know:
                 </p>
                 
                 <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <span>⚠️</span>
-                    Indicator Only - Not 100% Accurate
+                    We're Here to Help, Not Guarantee
                   </h3>
                   <p className="text-sm leading-relaxed">
-                    Fake Carriers analyzes emails using AI and technical checks, but scammers constantly develop new techniques. <strong>No tool provides 100% protection.</strong> Always verify suspicious emails through official channels.
+                    We analyze emails using AI and technical checks to help you spot potential scams. However, scammers are creative and constantly come up with new tricks. <strong>No security tool is perfect</strong>, so when something feels off, trust your instincts and verify through official channels.
                   </p>
                 </div>
                 
                 <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded-r-lg">
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <span>⚖️</span>
-                    No Liability
+                    Use at Your Own Risk
                   </h3>
                   <p className="text-sm leading-relaxed">
-                    The developers of Fake Carriers <strong>cannot be held responsible</strong> for any damages, losses, or security breaches. This tool is provided "as is" without warranties.
+                    While we work hard to help protect you, we can't be held responsible for any issues that might arise. This tool is provided "as is" to assist you, but the final decision is always yours.
                   </p>
                 </div>
               </div>
@@ -271,7 +271,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                     className="mt-1 w-5 h-5 text-[#4F46E5] border-gray-300 rounded focus:ring-[#4F46E5] cursor-pointer"
                   />
                   <span className="text-sm text-[#111827] leading-relaxed group-hover:text-[#4F46E5] transition-colors">
-                    I understand and acknowledge that this tool is an indicator only, that no security tool is 100% accurate, and that I should verify suspicious emails as recommended. I also acknowledge that the developers cannot be held liable for any damages or losses.
+                    I understand that this tool helps identify potential scams but isn't perfect, and I'll verify suspicious emails as recommended. I also understand the developers aren't liable for any issues.
                   </span>
                 </label>
                 
