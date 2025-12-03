@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000'
 
@@ -28,7 +28,7 @@ export default function Home() {
   const [showDisclaimer, setShowDisclaimer] = useState(false)
 
   // Check if setup is required and disclaimer on mount
-  useState(() => {
+  useEffect(() => {
     // Check if disclaimer was already accepted
     const accepted = localStorage.getItem('disclaimerAccepted')
     if (accepted === 'true') {
@@ -45,7 +45,7 @@ export default function Home() {
         }
       })
       .catch(() => {})
-  })
+  }, [])
   
   const handleAcceptDisclaimer = () => {
     localStorage.setItem('disclaimerAccepted', 'true')
