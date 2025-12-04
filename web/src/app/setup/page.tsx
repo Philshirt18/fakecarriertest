@@ -134,7 +134,7 @@ export default function SetupPage() {
             <nav className="flex">
               <button
                 onClick={() => setActiveTab('password')}
-                className={`flex-1 px-8 py-4 font-semibold transition-all ${
+                className={`flex-1 px-6 py-4 font-semibold transition-all text-sm md:text-base ${
                   activeTab === 'password'
                     ? 'border-b-2 border-secondary text-secondary'
                     : 'text-gray-600 hover:text-primary'
@@ -143,8 +143,18 @@ export default function SetupPage() {
                 Admin Password
               </button>
               <button
+                onClick={() => setActiveTab('apikeys')}
+                className={`flex-1 px-6 py-4 font-semibold transition-all text-sm md:text-base ${
+                  activeTab === 'apikeys'
+                    ? 'border-b-2 border-secondary text-secondary'
+                    : 'text-gray-600 hover:text-primary'
+                }`}
+              >
+                API Keys
+              </button>
+              <button
                 onClick={() => setActiveTab('outlook')}
-                className={`flex-1 px-8 py-4 font-semibold transition-all ${
+                className={`flex-1 px-6 py-4 font-semibold transition-all text-sm md:text-base ${
                   activeTab === 'outlook'
                     ? 'border-b-2 border-secondary text-secondary'
                     : 'text-gray-600 hover:text-primary'
