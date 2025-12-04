@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation'
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000'
 
 export default function SetupPage() {
-  const router = useRouter()
-  const [activeTab, setActiveTab] = useState<'password' | 'outlook'>('password')
+  const [activeTab, setActiveTab] = useState<'password' | 'apikeys' | 'outlook'>('password')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [geminiApiKey, setGeminiApiKey] = useState('')
@@ -17,13 +16,6 @@ export default function SetupPage() {
   const [passwordSet, setPasswordSet] = useState(false)
   
   // API Keys state
-  const [apiKeys, setApiKeys] = useState({
-    gemini: '',
-    virustotal: '',
-    abuseipdb: '',
-    urlscan: '',
-    custom: ''
-  })
   const [apiKeysSuccess, setApiKeysSuccess] = useState(false)
   const [apiKeysError, setApiKeysError] = useState('')
 
