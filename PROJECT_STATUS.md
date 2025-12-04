@@ -35,6 +35,10 @@
   - `GET /admin/scans` - List scans with filters
   - `GET /admin/reports` - List user reports
   - `GET /admin/stats` - Statistics dashboard
+  - `GET /admin/timeline` - Time-series scan data
+  - `GET /admin/domain-reputation` - Domain history and patterns
+  - `GET /admin/high-risk` - Recent high-risk scans
+  - `GET /admin/trending-domains` - Domains with increasing activity
   - `GET /admin/export.csv` - CSV export
   - `GET /setup/status` - Check setup status
   - `POST /setup/generate-token` - Generate secure token
@@ -78,6 +82,14 @@
   - Top domains analysis
   - CSV export functionality
   - Responsive design
+  
+- [x] **Analytics Dashboard** (New!)
+  - Timeline visualization with risk level breakdown
+  - High-risk scan monitoring
+  - Trending domains tracker
+  - Configurable time ranges (7-90 days)
+  - Real-time threat intelligence
+  - Domain reputation insights
 
 - [x] **Setup Wizard**
   - First-time setup interface
@@ -479,14 +491,22 @@ MIT License (or your chosen license)
 ---
 
 **Last Updated:** December 4, 2025  
-**Version:** 1.1.0 (MVP + Phase 1 Improvements)  
+**Version:** 1.2.0 (MVP + Phase 1 & 3 Improvements)  
 **Status:** Production Ready ✅
 
 ---
 
-## 🎉 Recent Updates (Phase 1 - December 2025)
+## 🎉 Recent Updates
 
-### User Experience Improvements
+### Phase 3 - Enhanced Analytics (December 4, 2025)
+- ✅ **Analytics Dashboard**: New `/admin/analytics` page with advanced visualizations
+- ✅ **Timeline Charts**: Daily scan activity with risk level breakdown
+- ✅ **High-Risk Monitoring**: Recent high-risk scans with scores and summaries
+- ✅ **Trending Domains**: Domains with increasing scan activity
+- ✅ **Domain Reputation API**: New endpoint to check domain history and patterns
+- ✅ **Time-Series Data**: Configurable time ranges (7, 14, 30, 90 days)
+
+### Phase 1 - User Experience (December 2025)
 - ✅ **Simplified Input Flow**: Email address is now the only required field
 - ✅ **Public Domain Detection**: Automatic detection of Gmail, Yahoo, Outlook, etc. with +20 risk penalty
 - ✅ **Color-Coded Results**: Large prominent banners showing risk level (green/yellow/red)
@@ -494,8 +514,6 @@ MIT License (or your chosen license)
 - ✅ **Disclaimer Modal**: First-time user disclaimer with localStorage persistence
 - ✅ **Enhanced Risk Levels**: Added "Safe" level for truly legitimate emails
 - ✅ **Better UX Copy**: Plain language explanations for non-technical users
-
-### Technical Improvements
 - ✅ **Flexible Scanning**: Basic checks with email only, enhanced checks with headers/body
 - ✅ **Public Domain List**: Comprehensive list of 15+ consumer email services
 - ✅ **Improved Scoring**: Refined thresholds (Safe ≤15, Low ≤35, Medium ≤60, High >60)
