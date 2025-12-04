@@ -219,9 +219,17 @@ export default function AdminPage() {
                 className="h-40 md:h-48 lg:h-56 w-auto object-contain"
               />
             </div>
-            <a href="/" className="text-sm text-gray-300 hover:text-white transition-colors font-medium absolute right-4 sm:right-6 lg:right-8">
-              ← Back to Scanner
-            </a>
+            <div className="flex items-center gap-3 absolute right-4 sm:right-6 lg:right-8">
+              <a 
+                href="/admin/analytics" 
+                className="text-sm bg-[#14B8A6] text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all font-semibold"
+              >
+                📊 Analytics
+              </a>
+              <a href="/" className="text-sm text-gray-300 hover:text-white transition-colors font-medium">
+                ← Back to Scanner
+              </a>
+            </div>
           </div>
         </div>
       </header>

@@ -358,6 +358,142 @@ async def get_stats(
     )
 
 
+@app.get("/admin/timeline")
+async def get_timeline(
+    days: int = Query(30, le=365),
+    db: Session = Depends(get_db)
+):
+    """Get scan timeline data for charts (admin only)"""
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    
+    # Daily scan counts by risk level
+    scans = db.query(
+        func.date(Scan.created_at).label('date'),
+        Scan.risk_level,
+        func.count(Scan.id).label('count')
+    ).filter(
+        Scan.created_at >= cutoff
+    ).group_by(
+        func.date(Scan.created_at),
+        Scan.risk_level
+    ).order_by('date').all()
+    
+    # Format for frontend
+    timeline = {}
+    for date, risk_level, count in scans:
+        date_str = date.isoformat()
+        if date_str not in timeline:
+            timeline[date_str] = {'safe': 0, 'low': 0, 'medium': 0, 'high': 0}
+        timeline[date_str][risk_level] = count
+    
+    return {'timeline': timeline}
+
+
+@app.get("/admin/domain-reputation")
+async def get_domain_reputation(
+    domain: str = Query(...),
+    db: Session = Depends(get_db)
+):
+    """Get reputation data for a specific domain (admin only)"""
+    scans = db.query(Scan).filter(Scan.from_domain == domain).order_by(desc(Scan.created_at)).all()
+    
+    if not scans:
+        raise HTTPException(status_code=404, detail="Domain not found")
+    
+    total_scans = len(scans)
+    avg_score = sum(s.score for s in scans) / total_scans
+    
+    risk_counts = {'safe': 0, 'low': 0, 'medium': 0, 'high': 0}
+    for scan in scans:
+        risk_counts[scan.risk_level] = risk_counts.get(scan.risk_level, 0) + 1
+    
+    # Check if domain was reported
+    reports = db.query(Report).filter(Report.from_domain == domain).count()
+    
+    return {
+        'domain': domain,
+        'total_scans': total_scans,
+        'avg_score': round(avg_score, 1),
+        'risk_distribution': risk_counts,
+        'reports': reports,
+        'first_seen': scans[-1].created_at.isoformat(),
+        'last_seen': scans[0].created_at.isoformat(),
+        'recent_scans': [
+            {
+                'id': str(s.id),
+                'sender': s.sender,
+                'score': s.score,
+                'risk_level': s.risk_level,
+                'created_at': s.created_at.isoformat()
+            }
+            for s in scans[:10]
+        ]
+    }
+
+
+@app.get("/admin/high-risk")
+async def get_high_risk_scans(
+    days: int = Query(7, le=90),
+    limit: int = Query(50, le=200),
+    db: Session = Depends(get_db)
+):
+    """Get recent high-risk scans (admin only)"""
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    
+    scans = db.query(Scan).filter(
+        Scan.risk_level.in_(['high', 'medium']),
+        Scan.created_at >= cutoff
+    ).order_by(desc(Scan.score), desc(Scan.created_at)).limit(limit).all()
+    
+    return [
+        {
+            'id': str(s.id),
+            'sender': s.sender,
+            'from_domain': s.from_domain,
+            'score': s.score,
+            'risk_level': s.risk_level,
+            'summary': s.summary[:3] if s.summary else [],
+            'created_at': s.created_at.isoformat()
+        }
+        for s in scans
+    ]
+
+
+@app.get("/admin/trending-domains")
+async def get_trending_domains(
+    days: int = Query(7, le=90),
+    limit: int = Query(20, le=100),
+    db: Session = Depends(get_db)
+):
+    """Get domains with increasing scan activity (admin only)"""
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    
+    domains = db.query(
+        Scan.from_domain,
+        func.count(Scan.id).label('scan_count'),
+        func.avg(Scan.score).label('avg_score'),
+        func.max(Scan.created_at).label('last_scan')
+    ).filter(
+        Scan.created_at >= cutoff
+    ).group_by(
+        Scan.from_domain
+    ).having(
+        func.count(Scan.id) >= 3  # At least 3 scans
+    ).order_by(
+        desc('scan_count')
+    ).limit(limit).all()
+    
+    return [
+        {
+            'domain': domain,
+            'scan_count': count,
+            'avg_score': round(float(avg_score), 1),
+            'last_scan': last_scan.isoformat()
+        }
+        for domain, count, avg_score, last_scan in domains
+    ]
+
+
 @app.get("/admin/export.csv")
 async def export_csv(
     type: str = Query("scans", regex="^(scans|reports)$"),
