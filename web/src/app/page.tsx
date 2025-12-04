@@ -302,7 +302,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             <div className="flex items-center justify-center flex-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src={`${API_BASE_URL}/static/logo.png?v=2`}
+                src="/logo-white.png"
                 alt="Fake Carriers Logo" 
                 className="h-32 md:h-40 lg:h-48 w-auto object-contain drop-shadow-2xl"
               />
