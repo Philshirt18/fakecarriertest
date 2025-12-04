@@ -54,8 +54,8 @@ export default function Home() {
   }
 
   const handleScan = async () => {
-    if (!sender || !headers || !body) {
-      setError('Please fill in all fields')
+    if (!sender) {
+      setError('Please enter an email address')
       return
     }
 
@@ -67,7 +67,11 @@ export default function Home() {
       const response = await fetch(`${API_BASE_URL}/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sender, headers, body })
+        body: JSON.stringify({ 
+          sender, 
+          headers: headers || '', 
+          body: body || '' 
+        })
       })
 
       if (!response.ok) {
@@ -347,42 +351,64 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               <label className="block text-sm font-semibold text-[#111827] mb-2 flex items-center gap-2">
                 <span className="w-1 h-4 bg-[#4F46E5] rounded-full"></span>
                 Sender Email Address
+                <span className="text-xs font-normal text-red-600">*Required</span>
               </label>
               <input
                 type="email"
                 value={sender}
                 onChange={(e) => setSender(e.target.value)}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all bg-gray-50 hover:bg-white"
-                placeholder="sender@example.com"
+                placeholder="carrier@example.com"
+                required
               />
+              <p className="text-xs text-gray-500 mt-1">
+                We'll check domain reputation, authentication records, and known scam patterns
+              </p>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-[#111827] mb-2 flex items-center gap-2">
-                <span className="w-1 h-4 bg-[#4F46E5] rounded-full"></span>
-                Email Headers
-              </label>
-              <textarea
-                value={headers}
-                onChange={(e) => setHeaders(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent font-mono text-sm transition-all bg-gray-50 hover:bg-white"
-                rows={6}
-                placeholder="From: sender@example.com&#10;Subject: Email subject&#10;Date: ..."
-              />
-            </div>
+            <div className="border-t border-gray-200 pt-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-sm font-semibold text-[#111827]">Optional: For Deeper Analysis</span>
+                <span className="text-xs text-gray-500">(Recommended for suspicious emails)</span>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-[#111827] mb-2 flex items-center gap-2">
+                    <span className="w-1 h-4 bg-[#14B8A6] rounded-full"></span>
+                    Email Headers
+                    <span className="text-xs font-normal text-gray-500">Optional</span>
+                  </label>
+                  <textarea
+                    value={headers}
+                    onChange={(e) => setHeaders(e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent font-mono text-sm transition-all bg-gray-50 hover:bg-white"
+                    rows={4}
+                    placeholder="From: sender@example.com&#10;Subject: Email subject&#10;Date: ..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Enables authentication checks (SPF, DKIM, DMARC)
+                  </p>
+                </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-[#111827] mb-2 flex items-center gap-2">
-                <span className="w-1 h-4 bg-[#4F46E5] rounded-full"></span>
-                Email Body
-              </label>
-              <textarea
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all bg-gray-50 hover:bg-white"
-                rows={8}
-                placeholder="Email content..."
-              />
+                <div>
+                  <label className="block text-sm font-semibold text-[#111827] mb-2 flex items-center gap-2">
+                    <span className="w-1 h-4 bg-[#14B8A6] rounded-full"></span>
+                    Email Body
+                    <span className="text-xs font-normal text-gray-500">Optional</span>
+                  </label>
+                  <textarea
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all bg-gray-50 hover:bg-white"
+                    rows={6}
+                    placeholder="Email content..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Enables content analysis (urgency tactics, threats, suspicious links)
+                  </p>
+                </div>
+              </div>
             </div>
 
             {error && (

@@ -32,7 +32,16 @@ class ScoringEngine:
         'text_credential_request': 20,  # Asking for passwords
         'text_payment_request': 18,
         'young_domain': 20,  # Newly registered domains
-        'ai_high_risk': 35   # AI detected sophisticated attack
+        'ai_high_risk': 35,   # AI detected sophisticated attack
+        'public_domain': 20   # Public email domain (Gmail, Yahoo, etc.)
+    }
+    
+    # Public email domains that are higher risk for business communications
+    PUBLIC_DOMAINS = {
+        'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'live.com',
+        'aol.com', 'icloud.com', 'mail.com', 'gmx.com', 'gmx.de',
+        'protonmail.com', 'proton.me', 'yandex.com', 'zoho.com',
+        'mail.ru', 'inbox.com', 'fastmail.com', 'tutanota.com'
     }
     
     def __init__(self):
@@ -73,6 +82,7 @@ class ScoringEngine:
         
         # DNS checks
         signals['from_domain'] = from_domain
+        signals['is_public_domain'] = from_domain.lower() in self.PUBLIC_DOMAINS
         signals['mx_present'] = self.dns_checker.check_mx(from_domain)
         
         spf_present, spf_record = self.dns_checker.check_spf(from_domain)
@@ -209,6 +219,11 @@ class ScoringEngine:
         if signals['domain_age_days'] is not None and signals['domain_age_days'] < 30:
             score += self.WEIGHTS['young_domain']
             reasons.append(('young_domain', f"Sender's domain was just created {signals['domain_age_days']} days ago"))
+        
+        # Public domain check
+        if from_domain.lower() in self.PUBLIC_DOMAINS:
+            score += self.WEIGHTS['public_domain']
+            reasons.append(('public_domain', f"Using public email service ({from_domain}) - professional carriers use company domains"))
         
         # AI analysis
         ai_analysis = signals.get('ai_analysis', {})
