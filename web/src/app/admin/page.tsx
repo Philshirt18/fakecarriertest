@@ -164,7 +164,7 @@ export default function AdminPage() {
           <div className="text-center mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
-              src="/logo-white.png"
+              src="/logo-grey.png"
               alt="Fake Carriers Logo" 
               className="h-24 w-auto mx-auto mb-4 object-contain"
             />
@@ -214,7 +214,7 @@ export default function AdminPage() {
             <div className="flex items-center justify-center flex-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="/logo-white.png"
+                src="/logo-grey.png"
                 alt="Fake Carriers Logo" 
                 className="h-32 md:h-40 w-auto object-contain"
               />
