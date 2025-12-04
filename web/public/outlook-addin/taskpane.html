@@ -70,40 +70,56 @@
             margin-bottom: 16px;
         }
         
-        .risk-badge {
-            display: inline-flex;
+        .traffic-light {
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 700;
         }
         
-        .risk-low {
+        .traffic-safe {
+            background: #D1FAE5;
+            color: #065F46;
+            border: 3px solid #10B981;
+        }
+        
+        .traffic-caution {
             background: #FEF3C7;
             color: #78350F;
-            border: 2px solid #FDE68A;
+            border: 3px solid #F59E0B;
         }
         
-        .risk-medium {
-            background: #FFEDD5;
-            color: #7C2D12;
-            border: 2px solid #FED7AA;
-        }
-        
-        .risk-high {
+        .traffic-danger {
             background: #FEE2E2;
             color: #991B1B;
-            border: 2px solid #FECACA;
+            border: 3px solid #EF4444;
         }
         
-        .score {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 16px;
+        .traffic-icon {
+            font-size: 48px;
+            line-height: 1;
+        }
+        
+        .summary-banner {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
             color: #111827;
+            border-left: 4px solid #4F46E5;
+        }
+        
+        .score-small {
+            font-size: 14px;
+            color: #6B7280;
+            margin-top: 8px;
         }
         
         .section {

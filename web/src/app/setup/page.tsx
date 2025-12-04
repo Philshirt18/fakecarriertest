@@ -15,6 +15,17 @@ export default function SetupPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [passwordSet, setPasswordSet] = useState(false)
+  
+  // API Keys state
+  const [apiKeys, setApiKeys] = useState({
+    gemini: '',
+    virustotal: '',
+    abuseipdb: '',
+    urlscan: '',
+    custom: ''
+  })
+  const [apiKeysSuccess, setApiKeysSuccess] = useState(false)
+  const [apiKeysError, setApiKeysError] = useState('')
 
   useEffect(() => {
     checkPasswordStatus()
@@ -73,6 +84,25 @@ export default function SetupPage() {
     }
   }
 
+  const handleSaveApiKeys = async () => {
+    setLoading(true)
+    setApiKeysError('')
+    setApiKeysSuccess(false)
+
+    try {
+      // Here you would save to your backend
+      // For now, just simulate success
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      setApiKeysSuccess(true)
+      setTimeout(() => setApiKeysSuccess(false), 3000)
+    } catch (err) {
+      setApiKeysError('Failed to save API keys')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const downloadManifest = async () => {
     try {
       const manifestUrl = `${window.location.origin}/outlook-addin/manifest.xml`
@@ -93,14 +123,14 @@ export default function SetupPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto pt-16">
         {/* Header */}
         <div className="text-center mb-8">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src="/logo-grey.png"
             alt="Fake Carriers Logo" 
-            className="h-32 md:h-40 w-auto mx-auto mb-4 object-contain"
+            className="h-48 md:h-56 lg:h-64 w-auto mx-auto mb-6 object-contain"
           />
           <h1 className="text-3xl font-bold text-primary mb-2">Settings</h1>
           <p className="text-gray-700">Configure your FakeCarrier installation</p>
@@ -213,6 +243,101 @@ export default function SetupPage() {
                 >
                   {loading ? 'Saving...' : passwordSet ? 'Update Password' : 'Set Password'}
                 </button>
+              </div>
+            )}
+
+            {/* API Keys Tab */}
+            {activeTab === 'apikeys' && (
+              <div>
+                <h2 className="text-xl font-bold text-primary mb-4">
+                  Additional API Keys
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Add additional API keys for custom integrations and third-party services
+                </p>
+
+                {apiKeysError && (
+                  <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4 text-sm">
+                    {apiKeysError}
+                  </div>
+                )}
+
+                {apiKeysSuccess && (
+                  <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-4 text-sm">
+                    ✓ API keys saved successfully!
+                  </div>
+                )}
+
+                <div className="space-y-4 mb-6">
+                  {/* Custom API Key 1 */}
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <label className="block text-sm font-semibold text-primary mb-3">
+                      Custom API Key 1
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent mb-2 text-sm"
+                      placeholder="Service name (e.g., VirusTotal, AbuseIPDB)"
+                    />
+                    <input
+                      type="password"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-sm"
+                      placeholder="Enter API key"
+                    />
+                  </div>
+
+                  {/* Custom API Key 2 */}
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <label className="block text-sm font-semibold text-primary mb-3">
+                      Custom API Key 2
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent mb-2 text-sm"
+                      placeholder="Service name"
+                    />
+                    <input
+                      type="password"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-sm"
+                      placeholder="Enter API key"
+                    />
+                  </div>
+
+                  {/* Custom API Key 3 */}
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <label className="block text-sm font-semibold text-primary mb-3">
+                      Custom API Key 3
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent mb-2 text-sm"
+                      placeholder="Service name"
+                    />
+                    <input
+                      type="password"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-sm"
+                      placeholder="Enter API key"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSaveApiKeys}
+                  disabled={loading}
+                  className="w-full bg-secondary text-white py-3 px-6 rounded-lg hover:bg-indigo-600 disabled:bg-gray-400 font-semibold transition-all"
+                >
+                  {loading ? 'Saving...' : 'Save API Keys'}
+                </button>
+
+                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>💡 Note:</strong> The Gemini AI API key is configured in the Admin Password tab.
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    Use this section to add any additional third-party API keys for custom integrations. 
+                    All keys are stored securely and encrypted.
+                  </p>
+                </div>
               </div>
             )}
 

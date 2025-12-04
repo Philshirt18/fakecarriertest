@@ -14,25 +14,25 @@ logger = logging.getLogger(__name__)
 class ScoringEngine:
     """Main scoring engine for phishing detection"""
     
-    # Scoring weights - balanced to catch real threats while avoiding false positives
+    # Scoring weights - aggressive phishing detection
     WEIGHTS = {
-        'no_mx': 25,  # No mail server is very suspicious
-        'no_spf': 8,   # Missing SPF is concerning
-        'no_dmarc': 8, # Missing DMARC is concerning
-        'no_dkim': 5,  # Missing DKIM - less critical for personal emails
-        'dkim_domain_mismatch': 18,  # Signature doesn't match - major red flag
-        'reply_to_mismatch': 15,     # Common phishing tactic
-        'return_path_mismatch': 8,
-        'auth_fail': 25,  # Failed authentication is very serious
-        'url_shortener': 10,
-        'url_punycode': 12,
-        'url_lookalike': 20,  # Clear impersonation attempt
-        'text_urgency': 8,    # "Act now!" pressure tactics
-        'text_threats': 10,   # Threatening language
-        'text_credential_request': 15,  # Asking for passwords
-        'text_payment_request': 12,
-        'young_domain': 15,  # Newly registered domains
-        'ai_high_risk': 30   # AI detected sophisticated attack
+        'no_mx': 30,  # No mail server is very suspicious
+        'no_spf': 15,   # Missing SPF is a major red flag
+        'no_dmarc': 15, # Missing DMARC is a major red flag
+        'no_dkim': 12,  # Missing DKIM is concerning
+        'dkim_domain_mismatch': 25,  # Signature doesn't match - major red flag
+        'reply_to_mismatch': 20,     # Common phishing tactic
+        'return_path_mismatch': 12,
+        'auth_fail': 30,  # Failed authentication is very serious
+        'url_shortener': 15,
+        'url_punycode': 18,
+        'url_lookalike': 25,  # Clear impersonation attempt
+        'text_urgency': 12,    # "Act now!" pressure tactics
+        'text_threats': 15,   # Threatening language
+        'text_credential_request': 20,  # Asking for passwords
+        'text_payment_request': 18,
+        'young_domain': 20,  # Newly registered domains
+        'ai_high_risk': 35   # AI detected sophisticated attack
     }
     
     def __init__(self):
@@ -228,12 +228,12 @@ class ScoringEngine:
         return score, [r[1] for r in reasons]
     
     def _get_risk_level(self, score: int) -> str:
-        """Map score to risk level - balanced thresholds"""
-        if score <= 20:
+        """Map score to risk level - strict thresholds for better detection"""
+        if score <= 15:
             return 'safe'  # Truly safe emails with no concerns
-        elif score <= 45:
+        elif score <= 35:
             return 'low'   # Minor concerns but probably legitimate
-        elif score <= 70:
+        elif score <= 60:
             return 'medium'  # Multiple red flags - likely phishing
         else:
             return 'high'  # Clear phishing attempt

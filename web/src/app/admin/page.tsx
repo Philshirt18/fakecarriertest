@@ -159,14 +159,14 @@ export default function AdminPage() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 pt-20">
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 max-w-md w-full">
           <div className="text-center mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/logo-grey.png"
               alt="Fake Carriers Logo" 
-              className="h-32 md:h-40 w-auto mx-auto mb-4 object-contain"
+              className="h-48 md:h-56 lg:h-64 w-auto mx-auto mb-8 object-contain"
             />
             <h1 className="text-2xl font-bold text-primary mb-2">Admin Access</h1>
             <p className="text-gray-700">Enter your password to continue</p>
