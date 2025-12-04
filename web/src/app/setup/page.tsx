@@ -100,7 +100,7 @@ export default function SetupPage() {
           <img 
             src="/logo-grey.png"
             alt="Fake Carriers Logo" 
-            className="h-24 w-auto mx-auto mb-4 object-contain"
+            className="h-32 md:h-40 w-auto mx-auto mb-4 object-contain"
           />
           <h1 className="text-3xl font-bold text-primary mb-2">Settings</h1>
           <p className="text-gray-700">Configure your FakeCarrier installation</p>

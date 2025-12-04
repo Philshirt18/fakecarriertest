@@ -166,7 +166,7 @@ export default function AdminPage() {
             <img 
               src="/logo-grey.png"
               alt="Fake Carriers Logo" 
-              className="h-24 w-auto mx-auto mb-4 object-contain"
+              className="h-32 md:h-40 w-auto mx-auto mb-4 object-contain"
             />
             <h1 className="text-2xl font-bold text-primary mb-2">Admin Access</h1>
             <p className="text-gray-700">Enter your password to continue</p>
@@ -216,7 +216,7 @@ export default function AdminPage() {
               <img 
                 src="/logo-grey.png"
                 alt="Fake Carriers Logo" 
-                className="h-32 md:h-40 w-auto object-contain"
+                className="h-40 md:h-48 lg:h-56 w-auto object-contain"
               />
             </div>
             <a href="/" className="text-sm text-gray-300 hover:text-white transition-colors font-medium absolute right-4 sm:right-6 lg:right-8">
