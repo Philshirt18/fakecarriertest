@@ -17,8 +17,9 @@
   - Header analysis (Reply-To, Return-Path mismatches)
   - URL extraction and analysis (shorteners, punycode, lookalikes)
   - Text pattern analysis (urgency, threats, credentials, payment)
+  - Public vs professional domain detection (+20 risk for Gmail/Yahoo/etc.)
   - Explainable scoring system (0-100 with weighted signals)
-  - Risk level classification (Low, Medium, High)
+  - Risk level classification (Safe, Low, Medium, High)
 
 - [x] **AI Enhancement (Gemini Integration)**
   - Google Gemini 2.0 Flash integration
@@ -56,15 +57,18 @@
 ### 2. Web Application (Next.js)
 - [x] **Main Scan Interface**
   - Clean, modern UI with #111827 branding
-  - Email input form (sender, headers, body)
+  - Email input form (sender required, headers/body optional)
   - Real-time scanning
   - Risk badge with visual indicators
+  - Large color-coded result banners (green/yellow/red)
   - Score visualization with progress bar
   - User-friendly findings (non-technical language)
   - Actionable recommendations
   - Technical details (collapsible)
   - Copy results to clipboard
-  - Report submission
+  - Report submission with "Report FakeCarrier" button
+  - Public domain detection (Gmail, Yahoo, etc.)
+  - Disclaimer modal on first use
 
 - [x] **Admin Dashboard**
   - Token-based authentication
@@ -474,6 +478,25 @@ MIT License (or your chosen license)
 
 ---
 
-**Last Updated:** November 28, 2025  
-**Version:** 1.0.0 (MVP)  
+**Last Updated:** December 4, 2025  
+**Version:** 1.1.0 (MVP + Phase 1 Improvements)  
 **Status:** Production Ready ✅
+
+---
+
+## 🎉 Recent Updates (Phase 1 - December 2025)
+
+### User Experience Improvements
+- ✅ **Simplified Input Flow**: Email address is now the only required field
+- ✅ **Public Domain Detection**: Automatic detection of Gmail, Yahoo, Outlook, etc. with +20 risk penalty
+- ✅ **Color-Coded Results**: Large prominent banners showing risk level (green/yellow/red)
+- ✅ **Report FakeCarrier Button**: Easy fraud reporting with optional comments
+- ✅ **Disclaimer Modal**: First-time user disclaimer with localStorage persistence
+- ✅ **Enhanced Risk Levels**: Added "Safe" level for truly legitimate emails
+- ✅ **Better UX Copy**: Plain language explanations for non-technical users
+
+### Technical Improvements
+- ✅ **Flexible Scanning**: Basic checks with email only, enhanced checks with headers/body
+- ✅ **Public Domain List**: Comprehensive list of 15+ consumer email services
+- ✅ **Improved Scoring**: Refined thresholds (Safe ≤15, Low ≤35, Medium ≤60, High >60)
+- ✅ **Better Recommendations**: Context-aware advice based on risk level
