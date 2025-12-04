@@ -98,8 +98,8 @@ export default function SetupPage() {
         <div className="text-center mb-8">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
-            src={`${API_BASE_URL}/static/logo.png?v=2`}
-            alt="FakeCarrier Logo" 
+            src="/logo-white.png"
+            alt="Fake Carriers Logo" 
             className="h-24 w-auto mx-auto mb-4 object-contain"
           />
           <h1 className="text-3xl font-bold text-primary mb-2">Settings</h1>

@@ -164,8 +164,8 @@ export default function AdminPage() {
           <div className="text-center mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
-              src={`${API_BASE_URL}/static/logo.png?v=2`}
-              alt="FakeCarrier Logo" 
+              src="/logo-white.png"
+              alt="Fake Carriers Logo" 
               className="h-24 w-auto mx-auto mb-4 object-contain"
             />
             <h1 className="text-2xl font-bold text-primary mb-2">Admin Access</h1>
@@ -214,8 +214,8 @@ export default function AdminPage() {
             <div className="flex items-center justify-center flex-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src={`${API_BASE_URL}/static/logo.png?v=2`}
-                alt="FakeCarrier Logo" 
+                src="/logo-white.png"
+                alt="Fake Carriers Logo" 
                 className="h-32 md:h-40 w-auto object-contain"
               />
             </div>
