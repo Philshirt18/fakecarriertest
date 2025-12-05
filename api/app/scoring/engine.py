@@ -33,7 +33,7 @@ class ScoringEngine:
         'text_payment_request': 18,
         'young_domain': 20,  # Newly registered domains
         'ai_high_risk': 35,   # AI detected sophisticated attack
-        'public_domain': 20   # Public email domain (Gmail, Yahoo, etc.)
+        'public_domain': 10   # Public email domain (Gmail, Yahoo, etc.) - reduced penalty
     }
     
     # Public email domains that are higher risk for business communications
