@@ -26,6 +26,7 @@ export default function Home() {
   const [setupRequired, setSetupRequired] = useState(false)
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
   const [showDisclaimer, setShowDisclaimer] = useState(false)
+  const [showOptionalFields, setShowOptionalFields] = useState(false)
 
   // Check if setup is required and disclaimer on mount
   useEffect(() => {
@@ -367,12 +368,32 @@ Scanned by FakeCarrier - https://fakecarrier.com`
             </div>
 
             <div className="border-t border-gray-200 pt-6">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-sm font-semibold text-[#111827]">Optional: For Deeper Analysis</span>
-                <span className="text-xs text-gray-500">(Recommended for suspicious emails)</span>
-              </div>
-              
-              <div className="space-y-4">
+              {!showOptionalFields ? (
+                <button
+                  onClick={() => setShowOptionalFields(true)}
+                  className="w-full bg-gray-100 hover:bg-gray-200 text-[#111827] py-3 px-4 rounded-xl font-semibold text-sm transition-all border-2 border-gray-300 hover:border-[#14B8A6] flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Add Email Headers & Body (Optional)
+                </button>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-[#111827]">Optional: For Deeper Analysis</span>
+                      <span className="text-xs text-gray-500">(Recommended for suspicious emails)</span>
+                    </div>
+                    <button
+                      onClick={() => setShowOptionalFields(false)}
+                      className="text-xs text-gray-500 hover:text-red-600 transition-colors"
+                    >
+                      Hide
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold text-[#111827] mb-2 flex items-center gap-2">
                     <span className="w-1 h-4 bg-[#14B8A6] rounded-full"></span>
@@ -409,6 +430,8 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                   </p>
                 </div>
               </div>
+                </>
+              )}
             </div>
 
             {error && (
