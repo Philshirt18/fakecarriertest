@@ -82,60 +82,93 @@ CONFIDENCE: [0.0-1.0]
 REASONING: [brief explanation]
 
 DETAILED_REPORT:
-Generate a comprehensive report following this EXACT structure (adapt language to match the email):
+Generate a comprehensive, conversational fraud analysis report. Detect the language of the email and respond in the SAME language (English or Spanish).
 
-🚨 [ALERT if HIGH/CRITICAL risk]: Risk [LOW/MEDIUM/HIGH/CRITICAL] - [brief summary]
+For HIGH/CRITICAL risk, start with:
+🚨 ALERT: HIGH / CRITICAL risk of impersonation (phishing) with {sender}. That domain looks like an imitation ("typosquatting") of a real company.
 
-1) Domain letter-by-letter analysis (comparison / minimal changes)
-   - Email domain: [domain]
-   - Probable legitimate domain it's trying to imitate: [if applicable]
-   - Letter-by-letter comparison:
-     Expected:  [l e t t e r s]
-     Suspicious: [l e t t e r s]
-   - ✅ Detected changes: [describe any typosquatting]
+For MEDIUM risk:
+⚠️ WARNING: MEDIUM risk with {sender}. This domain shows several suspicious patterns.
+
+For LOW risk:
+ℹ️ NOTICE: LOW risk with {sender}. Minor concerns detected but likely legitimate.
+
+Then provide detailed analysis in this EXACT structure:
+
+1) Domain letter by letter (comparison / minimal changes)
+Email domain: [domain]
+"Likely" legitimate domain it is trying to imitate: [real domain and company name with context, e.g., "codognotto (logistics company Codognotto; their corporate site uses codognotto.eu and email @codognotto.it)"]
+
+Core comparison:
+Expected legitimate: [l e t t e r s with spaces]
+Suspicious:        [l e t t e r s with spaces, aligned]
+✅ Detected: [describe the exact change, e.g., "an extra 's' → ...g n... → ...g s n... (classic typo/typosquatting)"]
+✅ Also: [any other changes like TLD differences, e.g., "the TLD is changed to .com instead of .eu / .it (common in impersonation)"]
 
 2) WHOIS (creation/expiration/DNS/status)
-   - Creation date: [date or "Not available"]
-   - Expiration date: [date or "Not available"]
-   - DNS servers: [servers or "Not available"]
-   - Domain status: [status or "Not available"]
-   - ⚠️ [Note if WHOIS data unavailable but other signals present]
+[If you can find WHOIS data, provide it. Otherwise:]
+⚠️ I was not able to obtain a publicly verifiable WHOIS/RDAP record to return with full confidence (exact dates, nameservers, and EPP status) from the sources accessible in this check.
 
-3) Does the domain "age" match an established company?
-   - [Analysis of whether domain age is compatible with claimed identity]
-   - [Red flags if recently created]
+This does NOT reduce the risk: based on what is visible, there are already strong signs of deception.
 
-4) Typical fraud providers / non-corporate infrastructure
-   - [Analysis of hosting, DNS, website status]
-   - [Note if using parking pages, quick registration services, etc.]
+(If you want to complete it yourself: use "ICANN Lookup" or any WHOIS/RDAP tool and paste the result here, and I'll interpret it line by line.)
 
-5) Does it imitate another known domain? (typosquatting)
-   - ✅ [Yes/No with detailed explanation]
-   - [Pattern analysis if typosquatting detected]
+3) Does the domain "age" fit an established company?
+[Provide conversational analysis, e.g.:]
+What is observable is that the domain's website is [describe status: "under construction", "parked", "active but suspicious", etc.].
+
+For a [describe what type of company it's impersonating], a corporate domain used for email normally has:
+• a consistent corporate site,
+• well-established email infrastructure,
+• and naming aligned with the real brand.
+
+[Conclude with assessment, e.g., "A typo domain + placeholder site is incompatible with a 'normal' corporate email."]
+
+4) Typical fraud providers / "non-corporate" infrastructure
+[Provide detailed analysis, e.g.:]
+The domain shows a "[describe what you find: Coming Soon page, Squarespace parking, cheap hosting, etc.]"
+
+This doesn't prove fraud by itself, but it adds weight when the domain is already a typo.
+
+5) Does it imitate another known brand? (typosquatting)
+✅ Yes. [domain] imitates the [Brand name] brand/domain via [describe the technique: "a minimal insertion of 1 letter", "character substitution", "homograph attack", etc.].
+
+This pattern is classic in impersonation campaigns so it "looks legitimate at a glance."
+
+[OR if no typosquatting:]
+❌ No clear typosquatting detected. The domain appears to be [describe].
 
 6) Final risk level
-   - [LOW / MEDIUM / HIGH / CRITICAL]
-   - Reasons:
-     • [Reason 1]
-     • [Reason 2]
-     • [Reason 3]
+[CRITICAL / HIGH / MEDIUM / LOW]
 
-7) Direct conclusion: Is this impersonation?
-   🚨 [Yes/No with strong statement]
-   - [Clear explanation]
-   
-   What to do now (recommended):
-   • [Action 1]
-   • [Action 2]
-   • [Action 3]
+Reasons:
+• [Detailed reason 1]
+• [Detailed reason 2]
+• [Detailed reason 3]
 
-IMPORTANT: 
-- Use 🚨 emoji for alerts
-- Use ✅ for detected issues
-- Use ⚠️ for warnings
-- Be VERY direct and clear
-- Write in the same language as the email content (English or Spanish)
-- If HIGH or CRITICAL risk, start with a bold alert"""
+7) Direct conclusion: is it impersonation?
+🚨 Yes: it is VERY LIKELY to be impersonation.
+I would treat any email from @[domain] as phishing until proven otherwise.
+
+[OR for lower risk:]
+⚠️ Possibly: [explain the uncertainty]
+
+[OR for legitimate:]
+✅ Unlikely: [explain why it appears legitimate]
+
+What to do now (recommended):
+• Do not reply, do not open links, do not download attachments.
+• Verify via an alternate channel: call the company or write only to an official published email (e.g., @[real-domain]).
+• [Add specific third recommendation based on context]
+
+IMPORTANT FORMATTING RULES:
+- Write in a conversational, explanatory tone with context in parentheses
+- Use quotes around technical terms like "typosquatting", "under construction", etc.
+- Provide specific company context when identifying the legitimate domain
+- Use 🚨 for critical alerts, ⚠️ for warnings, ✅ for confirmations, ❌ for negations, ℹ️ for info
+- Use • for bullet points
+- Be VERY detailed and educational - explain WHY each signal matters
+- If Spanish: use "Dominio letra por letra", "¿La edad del dominio encaja?", "Proveedores típicos de fraude", "¿Imita a otro conocido?", "Nivel de riesgo final", "Conclusión: ¿es suplantación?", "Qué hacer ahora (recomendado)"
 
             response = self.model.generate_content(prompt)
             result = self._parse_response(response.text)

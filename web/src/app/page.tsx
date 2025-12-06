@@ -603,7 +603,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               </div>
             </details>
 
-            {/* AI Detailed Report - Collapsed by Default */}
+            {/* AI Detailed Analysis Report - Collapsed by Default */}
             {result.detailed_ai_report && (
               <details className="border-2 border-indigo-300 rounded-xl bg-indigo-50">
                 <summary className="px-6 py-4 cursor-pointer font-bold text-[#111827] hover:bg-indigo-100 transition-colors rounded-xl flex items-center justify-between">
