@@ -627,13 +627,10 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                     </>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-600 mb-2">AI analysis not available</p>
+                      <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-3"></div>
+                      <p className="text-gray-600 mb-2">Generating AI analysis...</p>
                       <p className="text-xs text-gray-500">
-                        Make sure to include email headers and body for AI-powered analysis.
-                        <br />
-                        Debug: API URL = {API_BASE_URL}
-                        <br />
-                        Has report: {result.detailed_ai_report ? 'Yes' : 'No'}
+                        The AI is analyzing the domain and email patterns. This may take a few seconds.
                       </p>
                     </div>
                   )}
