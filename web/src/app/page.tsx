@@ -597,12 +597,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                     <span className="font-medium text-gray-700">Risk Score:</span>
                     <span className="ml-2 text-gray-600">{result.score}/100</span>
                   </div>
-                  {result.signals.ai_analysis?.ai_risk_score > 0 && (
-                    <div>
-                      <span className="font-medium text-gray-700">AI Content Analysis:</span>
-                      <span className="ml-2 text-gray-600">{result.signals.ai_analysis.ai_risk_score}/100 risk</span>
-                    </div>
-                  )}
+
                 </div>
               </div>
             </details>
