@@ -251,7 +251,7 @@ class ScoringEngine:
         elif score <= 60:
             return 'medium'  # Multiple red flags - likely phishing
         else:
-            return 'high'  # Clear phishing attempt
+            return 'high'  # Clear phishing attempt - score 61+
     
     def _generate_recommendations(self, signals: Dict[str, Any], risk_level: str) -> List[str]:
         """Generate actionable recommendations"""
