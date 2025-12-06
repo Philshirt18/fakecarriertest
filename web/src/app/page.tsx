@@ -146,17 +146,17 @@ Scanned by FakeCarrier - https://fakecarrier.com`
     switch (level) {
       case 'low':
         return {
-          label: 'MEDIUM RISK',
-          color: 'bg-amber-50 text-amber-900 border-amber-200',
-          badgeColor: 'bg-yellow-500 text-white border-yellow-600',
-          sectionColor: 'bg-amber-50/50 border-amber-200',
-          icon: '⚠️',
-          summary: 'This email has some suspicious signs. Double-check before clicking anything.',
-          whyScam: 'The sender\'s domain doesn\'t have proper security measures in place, which legitimate companies always have. (See Technical Details)',
+          label: 'SAFE',
+          color: 'bg-teal-50 text-teal-900 border-teal-200',
+          badgeColor: 'bg-green-500 text-white border-green-600',
+          sectionColor: 'bg-teal-50/50 border-teal-200',
+          icon: '✓',
+          summary: 'This email has minor concerns but appears mostly legitimate.',
+          whyScam: 'The sender\'s domain has some missing security measures, but no major red flags. (See Technical Details)',
           howToVerify: [
-            'Call the company using a phone number from their official website (not from this email)',
-            'Check if the sender\'s email address exactly matches the company\'s real domain',
-            'Look for spelling mistakes or unusual requests'
+            'Still verify any unusual requests',
+            'Check if the sender\'s email address matches the company\'s real domain',
+            'If something feels off, contact the company directly'
           ]
         }
       case 'medium':
