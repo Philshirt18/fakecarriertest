@@ -169,6 +169,7 @@ IMPORTANT FORMATTING RULES:
 - Use • for bullet points
 - Be VERY detailed and educational - explain WHY each signal matters
 - If Spanish: use "Dominio letra por letra", "¿La edad del dominio encaja?", "Proveedores típicos de fraude", "¿Imita a otro conocido?", "Nivel de riesgo final", "Conclusión: ¿es suplantación?", "Qué hacer ahora (recomendado)"
+"""
 
             response = self.model.generate_content(prompt)
             result = self._parse_response(response.text)
