@@ -244,14 +244,14 @@ class ScoringEngine:
     
     def _get_risk_level(self, score: int) -> str:
         """Map score to risk level - strict thresholds for better detection"""
-        if score <= 15:
-            return 'safe'  # Truly safe emails with no concerns
-        elif score <= 35:
-            return 'low'   # Minor concerns but probably legitimate
-        elif score <= 60:
-            return 'medium'  # Multiple red flags - likely phishing
-        else:
+        if score >= 61:
             return 'high'  # Clear phishing attempt - score 61+
+        elif score >= 36:
+            return 'medium'  # Multiple red flags - likely phishing
+        elif score >= 16:
+            return 'low'   # Minor concerns but probably legitimate
+        else:
+            return 'safe'  # Truly safe emails with no concerns
     
     def _generate_recommendations(self, signals: Dict[str, Any], risk_level: str) -> List[str]:
         """Generate actionable recommendations"""
