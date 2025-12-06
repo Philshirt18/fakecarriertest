@@ -146,9 +146,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
     switch (level) {
       case 'low':
         return {
-          label: 'BE CAREFUL',
+          label: 'MEDIUM RISK',
           color: 'bg-amber-50 text-amber-900 border-amber-200',
-          badgeColor: 'bg-amber-500 text-white border-amber-600',
+          badgeColor: 'bg-yellow-500 text-white border-yellow-600',
           sectionColor: 'bg-amber-50/50 border-amber-200',
           icon: '⚠️',
           summary: 'This email has some suspicious signs. Double-check before clicking anything.',
@@ -161,9 +161,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
         }
       case 'medium':
         return {
-          label: 'DANGER',
+          label: 'MEDIUM RISK',
           color: 'bg-orange-50 text-orange-900 border-orange-200',
-          badgeColor: 'bg-orange-600 text-white border-orange-700',
+          badgeColor: 'bg-yellow-500 text-white border-yellow-600',
           sectionColor: 'bg-orange-50/50 border-orange-200',
           icon: '⚠️',
           summary: 'This email has multiple red flags. It\'s likely trying to trick you.',
@@ -176,7 +176,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
         }
       case 'high':
         return {
-          label: 'STOP! SCAM ALERT',
+          label: 'LIKELY FRAUD',
           color: 'bg-red-50 text-red-900 border-red-200',
           badgeColor: 'bg-red-600 text-white border-red-700',
           sectionColor: 'bg-red-50/50 border-red-200',
@@ -194,7 +194,7 @@ Scanned by FakeCarrier - https://fakecarrier.com`
         return {
           label: 'SAFE',
           color: 'bg-teal-50 text-teal-900 border-teal-200',
-          badgeColor: 'bg-[#14B8A6] text-white border-teal-600',
+          badgeColor: 'bg-green-500 text-white border-green-600',
           sectionColor: 'bg-teal-50/50 border-teal-200',
           icon: '✓',
           summary: 'This email looks safe and passed our security checks.',
@@ -207,9 +207,9 @@ Scanned by FakeCarrier - https://fakecarrier.com`
         }
       default:
         return {
-          label: 'LOOKS SAFE',
+          label: 'SAFE',
           color: 'bg-teal-50 text-teal-900 border-teal-200',
-          badgeColor: 'bg-[#14B8A6] text-white border-teal-600',
+          badgeColor: 'bg-green-500 text-white border-green-600',
           sectionColor: 'bg-teal-50/50 border-teal-200',
           icon: '✓',
           summary: 'This email passed our security checks and appears to be legitimate.',
@@ -475,6 +475,8 @@ Scanned by FakeCarrier - https://fakecarrier.com`
               <div className={`inline-flex items-center space-x-3 px-6 py-3 rounded-xl border-2 ${riskConfig.badgeColor} text-lg font-bold mb-5 shadow-lg`}>
                 <span className="text-2xl">{riskConfig.icon}</span>
                 <span>{riskConfig.label}</span>
+                <span className="mx-2">•</span>
+                <span>Risk Score: {result.score}/100</span>
               </div>
               <p className="text-lg text-[#111827] font-medium max-w-2xl mx-auto leading-relaxed">
                 {riskConfig.summary}
