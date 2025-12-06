@@ -16,6 +16,7 @@ class ScanResponse(BaseModel):
     summary: List[str]
     signals: Dict[str, Any]
     recommendations: List[str]
+    detailed_ai_report: Optional[str] = None  # Detailed Spanish AI analysis
 
 
 class ReportRequest(BaseModel):

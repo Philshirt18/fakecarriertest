@@ -68,12 +68,16 @@ class ScoringEngine:
         # Generate recommendations
         recommendations = self._generate_recommendations(signals, risk_level)
         
+        # Extract detailed AI report if available
+        detailed_ai_report = signals.get('ai_analysis', {}).get('detailed_report', '')
+        
         return {
             'risk_level': risk_level,
             'score': score,
             'summary': reasons[:4],  # Top 3-4 reasons
             'signals': signals,
-            'recommendations': recommendations
+            'recommendations': recommendations,
+            'detailed_ai_report': detailed_ai_report
         }
     
     async def _collect_signals(self, sender: str, from_domain: str, headers: str, body: str) -> Dict[str, Any]:

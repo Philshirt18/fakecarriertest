@@ -10,6 +10,7 @@ interface ScanResult {
   summary: string[]
   signals: any
   recommendations: string[]
+  detailed_ai_report?: string
 }
 
 export default function Home() {
@@ -601,6 +602,31 @@ Scanned by FakeCarrier - https://fakecarrier.com`
                 </div>
               </div>
             </details>
+
+            {/* AI Detailed Report - Collapsed by Default */}
+            {result.detailed_ai_report && (
+              <details className="border-2 border-indigo-300 rounded-xl bg-indigo-50">
+                <summary className="px-6 py-4 cursor-pointer font-bold text-[#111827] hover:bg-indigo-100 transition-colors rounded-xl flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <span className="text-xl">🤖</span>
+                    <span>AI Detailed Analysis Report</span>
+                  </span>
+                  <span className="text-gray-400">▼</span>
+                </summary>
+                <div className="px-6 py-6 border-t-2 border-indigo-300">
+                  <div className="bg-white p-6 rounded-lg">
+                    <p className="text-xs text-gray-500 mb-4 italic">
+                      AI-powered comprehensive fraud analysis with domain inspection, typosquatting detection, and risk assessment
+                    </p>
+                    <div className="prose prose-sm max-w-none">
+                      <pre className="whitespace-pre-wrap text-sm text-gray-800 font-sans leading-relaxed">
+{result.detailed_ai_report}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            )}
 
             {/* Report Form */}
             {showReport && (
