@@ -40,8 +40,8 @@ class AIAnalyzer:
                 'ai_risk_score': 0,
                 'ai_flags': [],
                 'ai_confidence': 0.0,
-                'ai_reasoning': 'AI analysis not available',
-                'detailed_report': ''
+                'ai_reasoning': 'AI analysis not available - Gemini API key not configured',
+                'detailed_report': '⚠️ AI Analysis Not Available\n\nThe AI-powered analysis is not enabled. To enable it:\n\n1. Set GEMINI_API_KEY environment variable\n2. Set GEMINI_MODEL environment variable (e.g., gemini-2.0-flash-exp)\n3. Restart the service'
             }
         
         try:
@@ -178,13 +178,14 @@ IMPORTANT FORMATTING RULES:
             return result
             
         except Exception as e:
-            logger.error(f"AI analysis failed: {e}")
+            logger.error(f"AI analysis failed: {e}", exc_info=True)
+            error_msg = str(e)
             return {
                 'ai_risk_score': 0,
                 'ai_flags': [],
                 'ai_confidence': 0.0,
-                'ai_reasoning': f'AI analysis error: {str(e)[:100]}',
-                'detailed_report': ''
+                'ai_reasoning': f'AI analysis error: {error_msg[:100]}',
+                'detailed_report': f'⚠️ AI Analysis Error\n\nThe AI analysis could not be completed due to an error:\n{error_msg}\n\nPlease check:\n• Gemini API key is valid\n• API quota is not exceeded\n• Model name is correct (should be gemini-2.0-flash-exp or gemini-1.5-flash)'
             }
     
     def _parse_response(self, response_text: str) -> Dict[str, Any]:
